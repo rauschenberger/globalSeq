@@ -1,0 +1,17 @@
+citHeader("The R package globalSeq is based on the following article:")
+
+citEntry(entry="Article",
+    title = "Testing for association between RNA-Seq and high-dimensional data",
+    author = personList(as.person("Armin Rauschenberger"),
+                             as.person("Marianne A. Jonker"), 
+                             as.person("Mark A. van de Wiel"), 
+                             as.person("Renee X. Menezes")),
+    journal = "Manuscript in preparation",
+    year = 2015,
+    textVersion =
+		paste("Armin Rauschenberger, Marianne A. Jonker, Mark A. van de Wiel, and Renee X. Menezes.",
+		"Testing for association between RNA-Seq and high-dimensional data.",
+        	"Manuscript in preparation. 2015.")
+)
+
+citEntry()

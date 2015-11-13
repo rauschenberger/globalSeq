@@ -1,0 +1,289 @@
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{globalSeq}
+%\VignetteEncoding{UTF-8}
+\documentclass{article}
+\setlength\parindent{0pt}
+\usepackage{hyperref}
+\hypersetup{colorlinks = true,allcolors = blue}
+\usepackage{amsmath}
+\title{globalSeq: testing for association between \mbox{RNA-Seq} and high-dimensional data}
+\date{\today}
+\author{\textbf{A Rauschenberger}, \textbf{MA Jonker}, \textbf{MA van de Wiel} \\ and \textbf{RX Menezes}}
+\bibliographystyle{plain}
+
+\begin{document}
+\maketitle
+
+This vignette explains how to use the R~package \textbf{globalSeq}. The function \hyperref[TOA]{\mbox{omnibus}} tests  for associations between an overdispersed count variable and a high-dimensional covariate set. The function \hyperref[DCN]{\mbox{proprius}} decomposes the test statistic to show the contributions of individual samples or covariates. And the function \hyperref[GWA]{\mbox{cursus}} performs genome-wide analyses.
+
+\section{Initialisation}
+\label{Initialisation}
+
+Start with installing the R package \textbf{globalSeq}:
+<<eval=FALSE>>=
+# from GitHub (development version)
+tools::install_github("rauschenberger/globalSeq")
+
+# from Bioconductor (coming soon)
+source("https://bioconductor.org/biocLite.R")
+BiocInstaller::biocLite("globalSeq")
+@
+
+Please restart R before loading and attaching the package:
+<<>>=
+library(globalSeq)
+@
+
+If you want to reproduce the examples, you should attach the toy database:
+<<eval=FALSE>>=
+attach(toydata)
+@
+
+% alternative to the function "attach"
+<<echo=FALSE>>=
+names <- names(toydata)
+for(i in 1:length(names)){
+    assign(names[i], toydata[[i]])
+}
+rm(names)
+@
+
+The following commands access the R documentation:
+<<eval=FALSE>>=
+utils::help(globalSeq)
+utils::vignette("globalSeq")
+@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage %%%%%%%%%%%%%%%%%%%%%%%%
+\section{Test of association} %%%
+\label{TOA} %%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Data}
+\label{TOA Data}
+
+Data is available for \Sexpr{nrow(X)}~individuals and \Sexpr{ncol(X)+1}~variables.
+
+<<>>=
+cbind(y,X)
+@
+
+\subsection{Minimal example}
+\label{TOA Minimal example}
+
+We are interested whether the response variable~$\boldsymbol{y}$ is associated with the covariate matrix~$\boldsymbol{X}$. Looking at the data might already lead to an answer.\footnote{Note that the response variable takes higher values for individuals~$4$ and~$6$ than for the other individuals. Looking at the covariate matrix, we observe that individuals~$2$, $4$ and~$6$ are peculiar.
+We conclude: The data on individuals~$4$ and~$6$ speak for an association, but the data on individual~$2$ speaks against an association. Covariates~$12$, $13$ and~$14$ are uninformative, and the role of other covariates is less clear.}
+
+Because the number of covariates exceeds the sample size, classical tests cannot test their joint significance. But the function \textbf{omnibus} also works in high-dimensional settings:
+<<>>=
+set.seed(1)
+omnibus(y,X)
+@
+
+\subsection{Offset}
+\label{TOA Offset}
+
+Suppose that an offset is available. Relative to the offset, the response~$\boldsymbol{y}$ is more or less constant across samples:
+<<>>=
+rbind(y,offset)
+@
+
+If we account for this offset, there is no evidence for an association between the response~$\boldsymbol{y}$ and the covariate matrix~$\boldsymbol{X}$:
+<<>>=
+set.seed(1)
+omnibus(y,X,offset=offset)
+@
+
+\subsection{Confounding variable}
+\label{TOA Confounding variable}
+
+Suppose that each sample belongs either to group~$1$ or to group~$2$. We can observe that $\boldsymbol{y}$ tends to take small values in one group, and large values in the other:
+<<>>=
+rbind(y,group)
+@
+
+We suspect that the group membership explains some variation of the response~$\boldsymbol{y}$ or the covariate matrix~$\boldsymbol{X}$. Therefore we account for this confounding variable by using stratified permutations:
+<<>>=
+set.seed(1)
+omnibus(y,X,group=group)
+@
+
+\subsection{Overdisperion}
+\label{TOA Overdispersion}
+
+Setting the dispersion parameter of the negative binomial distribution equal to zero is equivalent to using the Poisson distribution:
+<<>>=
+set.seed(1)
+omnibus(y,X,phi=0)
+@
+
+\subsection{Multiple covariate sets}
+\label{TOA Multiple covariate sets}
+
+Suppose that two covariate sets are available:
+<<>>=
+X1 <- X[,c(1:11,15)]
+X2 <- X[,12:14]
+@
+
+We are interested in testing for associations between $\boldsymbol{y}$ on one hand, and $\boldsymbol{X1}$ or $\boldsymbol{X2}$ on the other:
+<<>>=
+set.seed(1)
+omnibus(y,list(X1,X2))
+@
+The output includes the \mbox{$p$-value} and the test statistic for the joint test, as well as the \mbox{$p$-values} for the individual tests.
+
+\subsection{P-values}
+\label{TOA P-values}
+
+When testing single covariate sets, the user can choose between three different types of \mbox{$p$-values}. By default \mbox{$p$-values} are calculated by permutation without repetitions ($\mathrm{kind}=1$). Alternatively, permutation can be interrupted when it becomes impossible to reach a predefined significance level ($0 < \mathrm{kind} < 1$), or the method of control variates can be used ($\mathrm{kind}=0$).
+
+<<results='hide'>>=
+omnibus(y,X,kind=1) # crude permutation test
+omnibus(y,X,kind=0.05) # interrupting permutation
+omnibus(y,X,kind=0) # method of control variates
+@
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage %%%%%%%%%%%%%%%%%%%%%%%%
+\section{Decomposition} %%%%%%%%%
+\label{DCN} %%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Minimal example}
+\label{DCN Minimal example}
+
+Even though a single hypothesis is tested on the covariate set, the function \textbf{proprius} can obtain the contributions of individual covariates or samples to the test statistic. 
+<<results='hide',fig.width=5,fig.height=3,fig.show='hold'>>=
+proprius(y,X,type="samples")
+proprius(y,X,type="covariates")
+@
+
+We observe that individual~$2$ contributes negatively to the test statistic, whereas the contributions of individuals~$4$ and $6$ are positive. We also observe that several covariates have large positive contributions. Summing over the individual contributions gives back the test statistic.
+
+
+\subsection{Null distribution}
+\label{DCN Null distribution}
+
+If a significance level~$\alpha$ is specified, then the \mbox{$1-\alpha$}~lower quantile under the null hypothesis is plotted:
+<<results='hide',fig.width=5,fig.height=3,fig.show='hold'>>=
+proprius(y,X,type="covariates",alpha=0.05)
+@
+
+\subsection{Further arguments}
+\label{DCN Further arguments}
+
+Offsets are included as in section~\ref{TOA Offset}, confounding variables are taken into account as in section~\ref{TOA Confounding variable}, and overdispersion is treated as in section~\ref{TOA Overdispersion}. The decompositions have not been implemented for multiple covariate sets.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage %%%%%%%%%%%%%%%%%%%%%%%%
+\section{Genome-wide analysis} %%
+\label{GWA} %%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Data}
+\label{GWA Data}
+
+Suppose the matrix~$\boldsymbol{Y}$ contains expression levels of \Sexpr{nrow(Y)}~genes and \Sexpr{ncol(Y)}~individuals, and the matrices~$\boldsymbol{V}$ and~$\boldsymbol{W}$ represent two different molecular profiles. Suppose that we furthermore know the locations of the genes ($\boldsymbol{Yloc}$), the locations of the genetic or epigenetic alterations ($\boldsymbol{Vloc}$ and $\boldsymbol{Wloc}$), and the chromosome indicators $\boldsymbol{Ychr}$, $\boldsymbol{Vchr}$ and $\boldsymbol{Wchr}$.
+<<>>=
+cbind(Yloc,Ychr,Y)
+cbind(Vloc,Vchr,V)
+cbind(Wloc,Wchr,W)
+@
+
+\subsection{Minimal example}
+\label{GWA Minimal example}
+
+We are interested in testing the expression of each gene for associations with \textit{local} genetic or epigenetic alterations.
+
+Setting the argument window to~$5$ entails that each gene is tested for association with all covariates that are located no further than $5$~units from the gene. In this example the covariates of interest are:
+
+<<echo=FALSE>>=
+for(i in 1:length(Yloc)){
+  cat(paste(names(Yloc[i]),": ",sep=""))
+  cat(names(Vloc)[Yloc[i]-5 < Vloc & Vloc < Yloc[i]+5],"\n")
+}
+@
+
+The chromosome-wide analysis will not return any \mbox{$p$-value} for gene~$4$, because no covariates are in its vicinity.
+<<results='hide',message=FALSE>>=
+set.seed(1)
+cursus(Y,Yloc,V,Vloc,window=5)
+@
+
+\subsection{Multiple chromosomes}
+\label{GWA Mutiple chromosomes}
+
+If multiple chromosomes are analysed, it is important to include the chromosome indicators. They make sure that genes are mapped to covariates on the same chromosome:
+<<results='hide',message=FALSE>>=
+set.seed(1)
+cursus(Y,Yloc,V,Vloc,window=5,Ychr,Vchr)
+@
+
+\subsection{Different library sizes}
+\label{GWA Different library sizes}
+
+To account for different sequencing depths, an offset can be included:
+<<results='hide',message=FALSE>>=
+offset <- colSums(Y) # library sizes
+set.seed(1)
+cursus(Y,Yloc,V,Vloc,window=5,offset=offset)
+@
+Otherwise the offset is calculated based on $\boldsymbol{Y}$.
+
+\subsection{Multiple molecular profiles}
+\label{GWA Multiple molecular profiles}
+
+For the simultaneous analysis of multiple molecular profiles, the function \textbf{cursus} expects one covariate matrix, one location vector and one window size for each profile.
+
+<<message=FALSE>>=
+set.seed(1)
+cursus(Y,Yloc,list(V,W),list(Vloc,Wloc),list(5,50))
+@
+
+\subsection{Further arguments}
+\label{GWA Further arguments}
+
+Confounding variables are taken into account as in section~\ref{TOA Confounding variable}. The user can choose between the negative binomial distribution (\verb+disp=TRUE+) and the Poisson distribution (\verb+disp=FALSE+).
+
+\section*{References}
+
+% The R package \textbf{globalSeq} is based on Rauschenberger et al.~(2015), where detailed references to previous work are given. If you use \textbf{globalSeq} for publications, please cite Rauschenberger et al.~(2015).
+% \newline \newline
+% Based on calculations from le Cessie and van Houwelingen~(1995) and using the generalised linear modelling framework from McCullagh et al.~(1989), 
+% Goeman et al.~(2004) showed how to test for association between a response variable from the exponential family of distributions and a high-dimensional covariate set, and derived the contributions of samples and covariates to the test statistic.
+% Menezes et al.~(2015) extended this test to multiple covariate sets.
+% Rauschenberger et al.~(2015) adapted the methods from Goeman et al.~(2004) and Menezes et al.~(2015) to the negative binomial distribution with an unknown dispersion parameter.
+% This permutation test was made computationally efficient using ideas from Wieringen et al.~(2008) (interrupting permutation) and Senchaudhuri et al.~(1995) (method of control variates). \newline
+
+The R package \textbf{globalSeq} is based on Rauschenberger et al.~\cite{Rauschenberger2015}, where detailed references to previous work are given. If you use \textbf{globalSeq} for publications, please cite Rauschenberger et al.~\cite{Rauschenberger2015}.
+\newline \newline
+Based on calculations from le Cessie and van Houwelingen~\cite{leCessie1995} and using the generalised linear modelling framework from McCullagh et al.~\cite{McCullagh1989}, 
+Goeman et al.~\cite{Goeman2004} showed how to test for association between a response variable from the exponential family of distributions and a high-dimensional covariate set, and derived the contributions of samples and covariates to the test statistic.
+Menezes et al.~\cite{Menezes2015} extended this test to multiple covariate sets.
+Rauschenberger et al.~\cite{Rauschenberger2015} adapted the methods from Goeman et al.~\cite{Goeman2004} and Menezes et al.~\cite{Menezes2015} to the negative binomial distribution with an unknown dispersion parameter.
+This permutation test was made computationally efficient using ideas from Wieringen et al.~\cite{Wieringen2008} (interrupting permutation) and Senchaudhuri et al.~\cite{Senchaudhuri1995} (method of control variates).
+
+\begingroup
+\renewcommand{\section}[2]{}%
+\bibliography{globalSeq}
+\endgroup
+
+% Goeman, J.J., van de Geer, S.A., de Kort, F. and van Houwelingen, H.C.~(2004). "A global test for groups of genes: testing association with a clinical outcome", in~\textit{Bioinformatics}, Vol.~20, pp.~93--99. \newline \newline
+% %
+% le Cessie, S. and van Houwelingen, H.C.~(1995). "Testing the fit of a regression model via score tests in random effects models", in~\textit{Biometrics}, Vol.~51, pp.~600--614. \newline \newline
+% %
+% McCullagh, P. and Nelder, J.A.~(1989). "Generalized linear models. 2nd ed", Chapman and Hall, London. \newline \newline
+% %
+% Menezes, R.X. and Mohammadi, L. and Goeman, J.J. and Boer, J.~(2015). "Analysing multiple types of molecular profiles simultaneously: connecting the needles in the haystack", \textit{Public Preprint}, \mbox{arXiv}:1510.02329 [stat.ME]. \newline \newline
+% %
+% Rauschenberger, A., Jonker, M.A., van de Wiel, M.A. and Menezes, R.X.~(2015). "Testing for association between \mbox{RNA-Seq} and high-dimensional data", \textit{Manuscript in preparation}. \newline \newline
+% %
+% Senchaudhuri, P. and Mehta, C.R. and Patel, N.R.~(1995). "Estimating exact p values by the method of control variates or Monte Carlo rescue", in~\textit{Journal of the American Statistical Association}, Vol.~90, pp.~640--648. \newline \newline
+% %
+% van Wieringen, W.N., van de Wiel, M.A. and van der Vaart, A.W.~(2008). "A test for partial differential expression", in~\textit{Journal of the American Statistical Association}, Vol.~103, pp.~1039--1049. \newline \newline
+
+\end{document}

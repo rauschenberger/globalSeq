@@ -828,7 +828,7 @@ intern.chromo <- function(Y, Ystart, Yend, X, Xloc, window, offset, group,
 #' 
 intern.matrix <- function(Y){
     if(class(Y)!="matrix"){
-        if(class(Y) %in% c("RangedSummarizedExperiment","SummarizedExperiment0","SummarizedExperiment")){
+        if(class(Y) %in% c("RangedSummarizedExperiment","SummarizedExperiment")){
             if(!is.element("SummarizedExperiment",utils::installed.packages()[,1])){
                 stop("Please transform Y to a matrix, or type:
                      source(\"http://bioconductor.org/biocLite.R\")

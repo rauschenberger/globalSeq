@@ -4,7 +4,7 @@
 \alias{intern.permu}
 \title{Internal function}
 \usage{
-intern.permu(n, it, group)
+intern.permu(n, it, group, kind)
 }
 \arguments{
 \item{n}{Number of samples.}
@@ -13,6 +13,9 @@ intern.permu(n, it, group)
 
 \item{group}{Either \code{NULL} or a factor
 of length \code{n}.}
+
+\item{kind}{computation \strong{:}
+number between 0 and 1}
 }
 \value{
 The function returns a matrix.
@@ -30,7 +33,7 @@ and \code{\link{proprius}}.
 \examples{
 group <- as.factor(c('A','A','B','B','B'))
 set.seed(1)
-intern.permu(n=5,it=1000,group=group)
+intern.permu(n=5,it=1000,group=group,kind=1)
 
 }
 \references{

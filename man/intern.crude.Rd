@@ -63,20 +63,19 @@ it returns the asymptotic p-value from Goeman et al. (2004).
 # simulate high-dimensional data
 n <- 30
 p <- 100
-set.seed(1)
+# set.seed(1)
 y <- rnbinom(n,mu=10,size=1/0.25)
 X <- matrix(rnorm(n*p),nrow=n,ncol=p)
 
 # prepare arguments
 mu <- rep(mean(y),n)
 phi <- (var(y)-mu)/mu^2
-perm <- intern.permu(n=n,it=100,group=NULL)
+perm <- intern.permu(n=n,it=99,group=NULL,kind=1)
 
 # perform tests
 intern.crude(y,X,mu,phi,perm)
-intern.focus(y,X,mu,phi,perm,0.05)
+intern.focus(y,X,mu,phi,perm,focus=0.01)
 intern.conva(y,X,mu,phi,perm,NULL)
-# globaltest::gt(y~X) gives pstar
 
 }
 \references{
@@ -99,7 +98,7 @@ Bioinformatics 2004;20:93-99.
 \href{http://bioinformatics.oxfordjournals.org/content/20/1/93}{full text}
 }
 \seealso{
-These are an \code{\link{internal}} functions. The user functions 
+These are \code{\link{internal}} functions. The user functions 
 of the R package \code{\link{globalSeq}} are \code{\link{cursus}},
 \code{\link{omnibus}}, and \code{\link{proprius}}.
 }

@@ -65,9 +65,7 @@ in order to allow stratified permutations.
 \examples{
 
 # simulate high-dimensional data
-n <- 30
-p <- 100
-set.seed(1)
+n <- 30; p <- 100
 y <- rnbinom(n,mu=10,size=1/0.25)
 X <- matrix(rnorm(n*p),nrow=n,ncol=p)
 

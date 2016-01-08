@@ -45,9 +45,8 @@
 #' non-negative real number
 #' @param nodes
 #' number of cluster nodes for parallel computation
-#' @param disp
-#' overdispersion relative to the Poisson model\strong{:}
-#' logical
+#' @param phi
+#' dispersion parameters\strong{:} vector of length \code{q}
 #' 
 #' @details
 #' Note that \code{Yloc}, \code{Xloc} and \code{window} must
@@ -117,10 +116,7 @@
 #' 
 #' @examples
 #' # simulate high-dimensional data
-#' n <- 30
-#' q <- 10
-#' p <- 100
-#' set.seed(1)
+#' n <- 30; q <- 10; p <- 100
 #' Y <- matrix(rnbinom(q*n,mu=10,
 #'     size=1/0.25),nrow=q,ncol=n)
 #' X <- matrix(rnorm(p*n),nrow=p,ncol=n)
@@ -129,22 +125,19 @@
 #' window <- 1
 #' 
 #' # hypothesis testing
-#' cursus(Y,Yloc,X,Xloc,window) 
+#' cursus(Y,Yloc,X,Xloc,window)
 #' 
 #' @usage
 #' cursus(Y, Yloc, X, Xloc, window,
 #'         Ychr = NULL, Xchr = NULL,
 #'         offset = NULL, group = NULL,
 #'         perm = 1000, nodes = 2,
-#'         disp = TRUE, kind = 0.01)
+#'         phi = NULL, kind = 0.01)
 #'           
 cursus <- function(Y, Yloc, X, Xloc, window, Ychr = NULL, Xchr = NULL, 
     offset = NULL, group = NULL, perm = 1000,
-    nodes = 2, disp = TRUE, kind = 0.01) {
-    # if(is.null(Yloc) & is.null(Xloc) & is.null(window)){ # temp Yloc <-
-    # rep(1,nrow(Y)) # temp Xloc <- rep(1,) # temp window <- 0 # temp } #
-    # temp
-    Y <- intern.matrix(Y)
+    nodes = 2, phi = NULL, kind = 0.01) { # instead of phi = NULL was disp = TRUE
+    Y <- globalSeq::intern.matrix(Y)
     if (is.vector(Yloc)) {
         Ystart <- Yend <- Yloc
     } else {
@@ -152,26 +145,30 @@ cursus <- function(Y, Yloc, X, Xloc, window, Ychr = NULL, Xchr = NULL,
         Yend <- Yloc[, 2]
     }
     if (length(perm) == 1) {
-        perm <- intern.permu(ncol(Y), perm - 1, group = group)
+        perm <- globalSeq::intern.permu(n = ncol(Y), it = perm - 1, group = group, kind=kind) # new: kind=kind
     }
     if (is.null(offset)) {
         ls <- colSums(Y)
         gm <- exp(1/length(ls) * sum(log(ls)))
         offset <- ls/gm
     }
+    # #  alternative with edgeR
+    # offset <- edgeR::calcNormFactors(Y)
+    # utils::capture.output({phi <- edgeR::estimateDisp(edgeR::DGEList(counts=Y,norm.factors=offset))})
+    # phi <- phi$tagwise.dispersion
     if (is.null(Ychr) | is.null(Xchr)) {
         ########## Analysing a single chromosome ##########
-        message("Analysing a single chromosome.")
-        out <- intern.chromo(Y = Y, Ystart = Ystart, Yend = Yend, X = X, 
+        cat("Analysing a single chromosome.\n")
+        out <- globalSeq::intern.chromo(Y = Y, Ystart = Ystart, Yend = Yend, X = X, 
             Xloc = Xloc, window = window, offset = offset, group = group, 
-            perm = perm, nodes = nodes, disp = disp, kind = kind)
+            perm = perm, nodes = nodes, phi = phi, kind = kind) # was disp = disp instead of phi = phi
     } else if (!is.null(Ychr) & !is.null(Xchr)) {
         ########## Analysing multiple chromosomes ##########
         out <- list()
         chr <- unique(Ychr)
-        message("Analysing multiple chromosomes:")
+        cat("Analysing multiple chromosomes:\n")
         for (i in 1:length(chr)) {
-            message(paste("chromosome", chr[i]))
+            cat(paste("chromosome", chr[i],"\n"))
             ###### START NEW ########
             if (class(X) == "list") {
                 Xpass <- lapply(1:length(X), function(j) X[[j]][Xchr[[j]] == 
@@ -185,13 +182,13 @@ cursus <- function(Y, Yloc, X, Xloc, window, Ychr = NULL, Xchr = NULL,
             } else {
                 Xlocpass <- Xloc[Xchr == chr[i]]
             }
-            out[[i]] <- intern.chromo(Y = Y[Ychr == chr[i], , drop = FALSE], 
+            out[[i]] <- globalSeq::intern.chromo(Y = Y[Ychr == chr[i], , drop = FALSE], 
                 Ystart = Ystart[Ychr == chr[i]], Yend = Yend[Ychr == chr[i]], 
                 X = Xpass, Xloc = Xlocpass, window = window, perm = perm, 
-                offset = offset, group = group, nodes = nodes, disp = disp, 
+                offset = offset, group = group, nodes = nodes, phi = phi, # was disp = disp instead of phi = phi
                 kind = kind)
             #### END NEW ######## The following line was active !  out[[i]] <-
-            #### intern.chromo(Y=Y[Ychr==chr[i],,drop=FALSE],
+            #### globalSeq::intern.chromo(Y=Y[Ychr==chr[i],,drop=FALSE],
             #### Ystart=Ystart[Ychr==chr[i]],Yend=Yend[Ychr==chr[i]],
             #### X=X[Xchr==chr[i],,drop=FALSE],Xloc=Xloc[Xchr==chr[i]],
             #### window=window,perm=perm,offset=offset,group=group,
@@ -319,9 +316,7 @@ cursus <- function(Y, Yloc, X, Xloc, window, Ychr = NULL, Xchr = NULL,
 #' @examples
 #' 
 #' # simulate high-dimensional data
-#' n <- 30
-#' p <- 100
-#' set.seed(1)
+#' n <- 30; p <- 100
 #' y <- rnbinom(n,mu=10,size=1/0.25)
 #' X <- matrix(rnorm(n*p),nrow=n,ncol=p)
 #'
@@ -338,7 +333,7 @@ omnibus <- function(y, X, offset = NULL, group = NULL, mu = NULL, phi = NULL,
     ########## initialisation ##########
     n <- length(y)  # number of samples
     if (is.null(mu) | is.null(phi)) {
-        est <- intern.estim(y = y, offset = offset)
+        est <- globalSeq::intern.estim(y = y, offset = offset)
         mu <- est$mu
         if (is.null(phi)) {
             phi <- est$phi
@@ -350,7 +345,7 @@ omnibus <- function(y, X, offset = NULL, group = NULL, mu = NULL, phi = NULL,
     }
     if (length(perm) == 1) {
         it <- perm
-        perm <- intern.permu(n = n, it = perm - 1, group = group)
+        perm <- globalSeq::intern.permu(n = n, it = perm - 1, group = group, kind = kind) # new: kind=kind
         it <- ncol(perm)
     } else {
         it <- ncol(perm)
@@ -358,29 +353,30 @@ omnibus <- function(y, X, offset = NULL, group = NULL, mu = NULL, phi = NULL,
     ########## testing one covariate set ##########
     if (class(X) == "matrix" | class(X) == "data.frame") {
         if (kind == 1) {
-            intern.crude(y = y, X = X, mu = mu, phi = phi, perm = perm)
+            globalSeq::intern.crude(y = y, X = X, mu = mu, phi = phi, perm = perm)
         } else if (kind == 0) {
-            intern.conva(y = y, X = X, mu = mu, phi = phi, perm = perm,
+            globalSeq::intern.conva(y = y, X = X, mu = mu, phi = phi, perm = perm,
                 offset = offset)
         } else if (kind > 0 & kind < 1) {
-            intern.focus(y = y, X = X, mu = mu, phi = phi, perm = perm, 
+            globalSeq::intern.focus(y = y, X = X, mu = mu, phi = phi, perm = perm, 
                 focus = kind)
         } else {
-            stop("Argument \"kind\" must within 0 and 1.")
+            stop("Argument \"kind\" must be within 0 and 1.")
         }
     } else {
         ########## testing multiple sets ##########
         sets <- X
         k <- length(sets)  # number of sets
         # # # # # # # # # # # separate testing # # # # # # # # # # #
-        single <- rep(NA, times = k)  # single p-values
+        single <- covs <- rep(NA, times = k)  # single p-values                        # new: covs <- 
         sim <- matrix(NA, nrow = k, ncol = it)  # simulated test statistics
         for (i in 1:k) {
             X <- sets[[i]]
             R <- X %*% t(X)/ncol(X)
-            temp <- apply(perm, 2, function(perm) intern.score(y = y[perm], 
+            temp <- apply(perm, 2, function(perm) globalSeq::intern.score(y = y[perm], 
                 R = R, mu = mu[perm], phi = phi))
             single[i] <- sum(temp >= temp[1])/it  # single p-values
+            covs[i] <- ncol(X)                                                         # new
             sim[i, ] <- temp
         }
         # # # # # # # # # joint testing # # # # # # # # #
@@ -393,7 +389,7 @@ omnibus <- function(y, X, offset = NULL, group = NULL, mu = NULL, phi = NULL,
         }
         joint <- sum(com >= com[1])/it  # joint p-value
         data.frame(joint = joint, teststat = com[1], single = matrix(single, 
-            nrow = 1))
+            nrow = 1),covs=matrix(covs,nrow=1))                                                              # new: p=p
     }
 }
 
@@ -471,9 +467,7 @@ omnibus <- function(y, X, offset = NULL, group = NULL, mu = NULL, phi = NULL,
 #' @examples
 #' 
 #' # simulate high-dimensional data
-#' n <- 30
-#' p <- 100
-#' set.seed(1)
+#' n <- 30; p <- 100
 #' y <- rnbinom(n,mu=10,size=1/0.25)
 #' X <- matrix(rnorm(n*p),nrow=n,ncol=p)
 #'
@@ -490,7 +484,7 @@ omnibus <- function(y, X, offset = NULL, group = NULL, mu = NULL, phi = NULL,
 proprius <- function(y, X, type, offset = NULL, group = NULL, mu = NULL, 
     phi = NULL, alpha = NULL, perm = 1000, plot = TRUE) {
     if (is.null(mu) | is.null(phi)) {
-        est <- intern.estim(y = y, offset = offset)
+        est <- globalSeq::intern.estim(y = y, offset = offset)
         mu <- est$mu
         if (is.null(phi)) {
             phi <- est$phi
@@ -503,25 +497,25 @@ proprius <- function(y, X, type, offset = NULL, group = NULL, mu = NULL,
     ### decomposition ###
     if (is.null(alpha)) {
         if (type == "samples") {
-            u <- intern.sam(y, X, mu, phi)
+            u <- globalSeq::intern.sam(y, X, mu, phi)
         }
         if (type == "covariates") {
-            u <- intern.cov(y, X, mu, phi)
+            u <- globalSeq::intern.cov(y, X, mu, phi)
         }
         upper <- NULL
     } else {
         if (length(perm) == 1) 
             {
-                perm <- intern.permu(n = length(y),
-                it = perm - 1, group = group)
+                perm <- globalSeq::intern.permu(n = length(y),
+                it = perm - 1, group = group, kind = Inf) # new: kind= Inf
             }  # new
-        # perm <- intern.permu(length(y),1000-1,group) # old
+        # perm <- globalSeq::intern.permu(length(y),1000-1,group) # old
         if (type == "covariates") {
-            sim <- apply(perm, 2, function(perm) intern.cov(y = y[perm], 
+            sim <- apply(perm, 2, function(perm) globalSeq::intern.cov(y = y[perm], 
                 X = X, mu = mu[perm], phi = phi))
         }
         if (type == "samples") {
-            sim <- apply(perm, 2, function(perm) intern.sam(y = y[perm], 
+            sim <- apply(perm, 2, function(perm) globalSeq::intern.sam(y = y[perm], 
                 X = X, mu = mu[perm], phi = phi))
         }
         u <- sim[, 1]
@@ -529,7 +523,7 @@ proprius <- function(y, X, type, offset = NULL, group = NULL, mu = NULL,
     }
     ### plot ###
     if (plot == "TRUE") {
-        intern.plot(u = u, upper = upper, xlab = paste("indices of", type))
+        globalSeq::intern.plot(u = u, upper = upper, xlab = paste("indices of", type))
     }
     ### output ###
     if (is.null(alpha)) {

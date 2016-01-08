@@ -6,7 +6,7 @@
 \usage{
 intern.chromo(Y, Ystart, Yend, X, Xloc,
              window, offset, group, perm,
-             nodes, disp, kind)
+             nodes, phi, kind)
 }
 \arguments{
 \item{Y}{RNA-Seq data\strong{:}
@@ -40,8 +40,7 @@ positive integer}
 
 \item{nodes}{number of cluster nodes for parallel computation}
 
-\item{disp}{overdispersion relative to the Poisson model\strong{:}
-logical}
+\item{phi}{dispersion parameters\strong{:} vector of length \code{q}}
 
 \item{kind}{computation \strong{:}
 number between 0 and 1}

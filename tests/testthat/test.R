@@ -8,7 +8,7 @@ testthat::test_that("estimates are inside parameter space", {
 })
 
 testthat::test_that("permutations are without repetitions", {
-    perms <- globalSeq::intern.permu(n = 3, it = 1000, group = NULL)
+    perms <- globalSeq::intern.permu(n = 3, it = 1000, group = NULL,kind=rnorm(1))
     testthat::expect_less_than(ncol(perms), factorial(3) + 1)
     testthat::expect_equal(perms[, 1], 1:3)
     testthat::expect_false(any(duplicated(t(perms))))
@@ -17,7 +17,7 @@ testthat::test_that("permutations are without repetitions", {
 testthat::test_that("permutations are only within groups \n and not between groups", 
     {
         group <- c(1, 2, 2, 1, 2)
-        perm <- globalSeq::intern.permu(n = length(group), it = 1000, group = group)
+        perm <- globalSeq::intern.permu(n = length(group), it = 1000, group = group,kind=rnorm(1))
         obs <- apply(perm, 1, function(x) sort(unique(x)))
         testthat::expect_identical(length(unique(obs)), length(unique(group)))
         testthat::expect_true(identical(obs[[1]], obs[[4]]))
@@ -80,7 +80,8 @@ testthat::test_that("trivial p-values are given correctly", {
     X <- matrix(rnorm(30 * 100), nrow = 30, ncol = 100)
     mu <- rep(mean(y), 30)
     phi <- (var(y) - mu)/mu^2
-    perm <- globalSeq::intern.permu(n = 30, it = 100, group = NULL)
+    set.seed(1)
+    perm <- globalSeq::intern.permu(n = 30, it = 100, group = NULL,kind=runif(1))
     # If there is no differential expression, the p-value should be equal
     # to one.
     y0 <- rep(0, length(y))
@@ -134,12 +135,11 @@ testthat::test_that("different permutation tests do not contradict each other \n
         mu <- rep(mean(y), 30)
         phi <- (var(y) - mu)/mu^2
         # different permutation tests
-        perm <- globalSeq::intern.permu(n = 30, it = 100, group = NULL)
+        perm <- globalSeq::intern.permu(n = 30, it = 100, group = NULL,kind=rnorm(1))
         crude <- globalSeq::intern.crude(y, X, mu, phi, perm)
         focus <- globalSeq::intern.focus(y, X, mu, phi, perm, focus = 0.01)
         conva <- globalSeq::intern.conva(y, X, mu, phi, perm, NULL)
         # various checks
-        testthat::expect_equal(crude$pvalue, conva$rausch)
         testthat::expect_less_than(crude$pvalue, focus$pvalue + 10^(-10))
         testthat::expect_less_than(min(crude$pvalue, focus$pvalue, conva$pvale), 
             1 + 10^(-10))
@@ -155,7 +155,7 @@ testthat::test_that("different permutation tests do not contradict each other \n
         mu <- rep(mean(y), 30)
         phi <- (var(y) - mu)/mu^2
         # different permutation tests
-        perm <- globalSeq::intern.permu(n = 30, it = 100, group = NULL)
+        perm <- globalSeq::intern.permu(n = 30, it = 100, group = NULL,kind=rnorm(1))
         crude <- globalSeq::omnibus(y, X, mu = mu, phi = phi, perm = perm, 
             kind = 1)
         focus <- globalSeq::omnibus(y, X, mu = mu, phi = phi, perm = perm, 
@@ -163,7 +163,6 @@ testthat::test_that("different permutation tests do not contradict each other \n
         conva <- globalSeq::omnibus(y, X, mu = mu, phi = phi, perm = perm, 
             kind = 0)
         # various tests
-        testthat::expect_equal(crude$pvalue, conva$rausch)
         testthat::expect_less_than(crude$pvalue, focus$pvalue + 10^(-10))
         testthat::expect_less_than(min(crude$pvalue, focus$pvalue, conva$pvale), 
             1 + 10^(-10))
@@ -179,7 +178,7 @@ testthat::test_that("significance levels are intepreted correctly", {
     y <- matrix(rnbinom(30, mu = 10, size = 1/0.25), nrow = 1)
     X <- matrix(rnorm(100 * 30), nrow = 100, ncol = 30)
     # different significance levels
-    perm <- globalSeq::intern.permu(n = 30, it = 100, group = NULL)
+    perm <- globalSeq::intern.permu(n = 30, it = 100, group = NULL,kind=rnorm(1))
     alpha0.00 <- globalSeq::proprius(y, t(X), type = "covariates", perm = perm, 
         alpha = 0)
     alpha0.01 <- globalSeq::proprius(y, t(X), type = "covariates", perm = perm, 
@@ -208,7 +207,7 @@ testthat::test_that("permutating inside or outside omnibus is equivalent",{
     X <- matrix(rnorm(100 * 30), nrow = 100, ncol = 30)
     # permuting outside
     set.seed(1)
-    perm <- globalSeq::intern.permu(n = 30, it = 100, group = NULL)
+    perm <- globalSeq::intern.permu(n = 30, it = 100, group = NULL,kind=rnorm(1))
     res.out <- globalSeq::omnibus(y,t(X),perm=perm)
     # permuting inside
     set.seed(1)
@@ -223,7 +222,7 @@ testthat::test_that("permutating inside or outside proprius is equivalent",{
     X <- matrix(rnorm(100 * 24), nrow = 100, ncol = 24)
     # permuting outside
     set.seed(1)
-    perm <- globalSeq::intern.permu(n = 24, it = 100, group = NULL)
+    perm <- globalSeq::intern.permu(n = 24, it = 100, group = NULL,kind=rnorm(1))
     res.out <- globalSeq::proprius(y,t(X),type="samples",perm=perm,alpha=0.01)$upper
     # permuting inside
     set.seed(1)
@@ -239,7 +238,7 @@ testthat::test_that("multiple covariate sets can be analysed",
         X1 <- matrix(rnorm(100 * 30), nrow = 100, ncol = 30)
         X2 <- matrix(rnorm(100 * 30), nrow = 100, ncol = 30)
         # different tests
-        perm <- globalSeq::intern.permu(n = 30, it = 100, group = NULL)
+        perm <- globalSeq::intern.permu(n = 30, it = 100, group = NULL,kind=rnorm(1))
         single.1 <- globalSeq::omnibus(y, t(X1), perm = perm)$pvalue
         single.2 <- globalSeq::omnibus(y, t(X2), perm = perm)$pvalue
         joint1 <- globalSeq::omnibus(y, list(t(X1), t(X2)), perm = perm)

@@ -9,12 +9,17 @@ The proposed test can detect genetic and epigenetic alterations that affect gene
 
 **Installation**
 
-The package globalSeq depends on [R \>= 3.2](https://cran.r-project.org/), and its installation requires the package [devtools](https://cran.r-project.org/web/packages/devtools/README.html).
-
-If these conditions are met, the following R command installs globalSeq:
+The package globalSeq depends on [R \>= 3.3](https://cran.r-project.org/), and is available from Bioconductor:
 
 ``` r
-devtools::install_github("rauschenberger/globalSeq")
+source("https://bioconductor.org/biocLite.R")
+BiocInstaller::biocLite("globalSeq")
+```
+
+Alternatively, it can be installed from [GitHub](https://github.com). This requires the package [devtools](https://cran.r-project.org/web/packages/devtools/README.html):
+
+``` r
+devtools::install_github("Bioconductor-mirror/globalSeq")
 ```
 
 Please restart R before loading the package and its documentation:

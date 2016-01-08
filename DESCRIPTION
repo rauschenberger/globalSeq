@@ -1,16 +1,20 @@
 Package: globalSeq
-Version: 0.99.5
+Version: 0.99.6
 Title: Testing for association between RNA-Seq and high-dimensional data
-Description: The method may be conceptualised as a test of overall significance in regression analysis, where the response variable is overdispersed and the
-                 number of explanatory variables exceeds the sample size.
-biocViews: StatisticalMethod, GeneExpression, RNASeq, GenomeWideAssociation, DifferentialExpression
-URL: http://rauschenberger.github.io/globalSeq/
+Description: The method may be conceptualised as a test of overall significance
+    in regression analysis, where the response variable is overdispersed and the
+    number of explanatory variables exceeds the sample size.
+biocViews: StatisticalMethod, GeneExpression, RNASeq, GenomeWideAssociation,
+    DifferentialExpression
+Depends:
+    R(>= 3.3.0)
+Suggests:
+    knitr,
+    testthat,
+    SummarizedExperiment
 Author: Armin Rauschenberger
 Maintainer: Armin Rauschenberger <a.rauschenberger@vumc.nl>
-Depends: R(>= 3.3.0)
-Suggests: knitr, testthat, SummarizedExperiment
 VignetteBuilder: knitr
 License: GPL-3
 LazyData: true
-RoxygenNote: 5.0.0
-NeedsCompilation: no
+RoxygenNote: 5.0.1

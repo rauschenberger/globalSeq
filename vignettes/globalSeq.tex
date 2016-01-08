@@ -1,0 +1,513 @@
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{globalSeq}
+%\VignetteEncoding{UTF-8}
+\documentclass{article}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\setlength\parindent{0pt}
+\usepackage{hyperref}
+\hypersetup{colorlinks = true,allcolors = blue}
+\usepackage{amsmath}
+\title{globalSeq: testing for association between \mbox{RNA-Seq} and high-dimensional data}
+\date{\today}
+\author{\textbf{A Rauschenberger}, \textbf{MA Jonker}, \textbf{MA van de Wiel} \\ and \textbf{RX Menezes}}
+\bibliographystyle{plain}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+\maketitle
+
+This vignette explains how to use the R~package \textbf{globalSeq}. The function \hyperref[TOA]{\mbox{omnibus}} tests  for associations between an overdispersed count variable and a high-dimensional covariate set. The function \hyperref[DCN]{\mbox{proprius}} decomposes the test statistic to show the contributions of individual samples or covariates. And the function \hyperref[GWA]{\mbox{cursus}} performs genome-wide analyses.
+
+\section{Initialisation}
+\label{Initialisation}
+
+Start with installing the R package \textbf{globalSeq} from Bioconductor:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{source}\hlstd{(}\hlstr{"https://bioconductor.org/biocLite.R"}\hlstd{)}
+\hlstd{BiocInstaller}\hlopt{::}\hlkwd{biocLite}\hlstd{(}\hlstr{"globalSeq"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+Please type the following command to load and attach the package:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{library}\hlstd{(globalSeq)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+If you want to reproduce the examples, you should attach the toy database:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{attach}\hlstd{(toydata)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+% alternative to the function "attach"
+
+
+The following commands access the R documentation:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{utils}\hlopt{::}\hlkwd{help}\hlstd{(globalSeq)}
+\hlstd{utils}\hlopt{::}\hlkwd{vignette}\hlstd{(}\hlstr{"globalSeq"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage %%%%%%%%%%%%%%%%%%%%%%%%
+\section{Test of association} %%%
+\label{TOA} %%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Data}
+\label{TOA Data}
+
+Data is available for 10~individuals and 16~variables.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{cbind}\hlstd{(y,X)}
+\end{alltt}
+\begin{verbatim}
+##        y X1 X2 X3 X4 X5 X6 X7 X8 X9 X10 X11 X12 X13 X14 X15
+## ind1   7  0  1  0  0  0  0  1  1  1   0   1   0   1   1   0
+## ind2   1  1  1  0 37 27 37 26 26 50   0   1   0   1   0   0
+## ind3   1  0  1  0  0  0  1  1  1  0   0   0   0   0   0   1
+## ind4  15 40 19 33 34 23 33 38 21 20  19  28   1   1   1  32
+## ind5   6  1  1  0  0  0  1  1  1  1   1   1   1   1   0   1
+## ind6  16 26 40 25 23 25 25 20 34 38  19  25   1   0   1  36
+## ind7   5  0  0  1  1  0  0  1  0  0   0   0   1   1   1   1
+## ind8   2  0  1  1  0  0  0  1  0  0   0   0   1   0   1   1
+## ind9   2  1  1  1  1  0  0  0  1  1   0   0   1   1   1   1
+## ind10  5  1  0  1  0  1  0  0  1  1   1   0   1   1   1   0
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\subsection{Minimal example}
+\label{TOA Minimal example}
+
+We are interested whether the response variable~$\boldsymbol{y}$ is associated with the covariate matrix~$\boldsymbol{X}$. Looking at the data might already lead to an answer.\footnote{Note that the response variable takes higher values for individuals~$4$ and~$6$ than for the other individuals. Looking at the covariate matrix, we observe that individuals~$2$, $4$ and~$6$ are peculiar.
+We conclude: The data on individuals~$4$ and~$6$ speak for an association, but the data on individual~$2$ speaks against an association. Covariates~$12$, $13$ and~$14$ are uninformative, and the role of other covariates is less clear.}
+
+Because the number of covariates exceeds the sample size, classical tests cannot test their joint significance. But the function \textbf{omnibus} also works in high-dimensional settings:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{set.seed}\hlstd{(}\hlnum{1}\hlstd{)}
+\hlkwd{omnibus}\hlstd{(y,X)}
+\end{alltt}
+\begin{verbatim}
+##   pvalue teststat
+## 1  0.025 2234.206
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\newpage
+
+\subsection{Offset}
+\label{TOA Offset}
+
+Suppose that an offset is available. Relative to the offset, the response~$\boldsymbol{y}$ is more or less constant across samples:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{rbind}\hlstd{(y,offset)}
+\end{alltt}
+\begin{verbatim}
+##        ind1 ind2 ind3 ind4 ind5 ind6 ind7 ind8 ind9 ind10
+## y         7    1    1   15    6   16    5    2    2     5
+## offset   15    1    2   28   10   28    9    2    5     7
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+If we account for this offset, there is no evidence for an association between the response~$\boldsymbol{y}$ and the covariate matrix~$\boldsymbol{X}$:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{set.seed}\hlstd{(}\hlnum{1}\hlstd{)}
+\hlkwd{omnibus}\hlstd{(y,X,}\hlkwc{offset}\hlstd{=offset)}
+\end{alltt}
+\begin{verbatim}
+##   pvalue  teststat
+## 1  0.967 -10693.18
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\subsection{Confounding variable}
+\label{TOA Confounding variable}
+
+Suppose that each sample belongs either to group~$1$ or to group~$2$. We can observe that $\boldsymbol{y}$ tends to take small values in one group, and large values in the other:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{rbind}\hlstd{(y,group)}
+\end{alltt}
+\begin{verbatim}
+##       ind1 ind2 ind3 ind4 ind5 ind6 ind7 ind8 ind9 ind10
+## y        7    1    1   15    6   16    5    2    2     5
+## group    1    1    1    2    1    2    1    1    1     1
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+We suspect that the group membership explains some variation of the response~$\boldsymbol{y}$ or the covariate matrix~$\boldsymbol{X}$. Therefore we account for this confounding variable by using stratified permutations:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{set.seed}\hlstd{(}\hlnum{1}\hlstd{)}
+\hlkwd{omnibus}\hlstd{(y,X,}\hlkwc{group}\hlstd{=group)}
+\end{alltt}
+\begin{verbatim}
+##      pvalue teststat
+## 1 0.8747475 2234.206
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\newpage
+
+\subsection{Overdisperion}
+\label{TOA Overdispersion}
+
+Setting the dispersion parameter of the negative binomial distribution equal to zero is equivalent to using the Poisson distribution:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{set.seed}\hlstd{(}\hlnum{1}\hlstd{)}
+\hlkwd{omnibus}\hlstd{(y,X,}\hlkwc{phi}\hlstd{=}\hlnum{0}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+##   pvalue teststat
+## 1  0.025 77991.33
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\subsection{Multiple covariate sets}
+\label{TOA Multiple covariate sets}
+
+Suppose that two covariate sets are available:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{X1} \hlkwb{<-} \hlstd{X[,}\hlkwd{c}\hlstd{(}\hlnum{1}\hlopt{:}\hlnum{11}\hlstd{,}\hlnum{15}\hlstd{)]}
+\hlstd{X2} \hlkwb{<-} \hlstd{X[,}\hlnum{12}\hlopt{:}\hlnum{14}\hlstd{]}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+We are interested in testing for associations between $\boldsymbol{y}$ on one hand, and $\boldsymbol{X1}$ or $\boldsymbol{X2}$ on the other:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{set.seed}\hlstd{(}\hlnum{1}\hlstd{)}
+\hlkwd{omnibus}\hlstd{(y,}\hlkwd{list}\hlstd{(X1,X2))}
+\end{alltt}
+\begin{verbatim}
+##   joint teststat single.1 single.2
+## 1 0.063 2.347201    0.025    0.561
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+The output includes the \mbox{$p$-value} and the test statistic for the joint test, the \mbox{$p$-values} for the individual tests, and the numbers of tested covariates.
+
+\subsection{P-values}
+\label{TOA P-values}
+
+When testing single covariate sets, the user can choose between three different types of \mbox{$p$-values}. By default \mbox{$p$-values} are calculated by permutation without repetitions ($\mathrm{kind}=1$). Alternatively, permutation can be interrupted when it becomes impossible to reach a predefined significance level ($0 < \mathrm{kind} < 1$), or the method of control variates can be used ($\mathrm{kind}=0$).
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{omnibus}\hlstd{(y,X,}\hlkwc{kind}\hlstd{=}\hlnum{1}\hlstd{)} \hlcom{# crude permutation test}
+\hlkwd{omnibus}\hlstd{(y,X,}\hlkwc{kind}\hlstd{=}\hlnum{0.05}\hlstd{)} \hlcom{# interrupting permutation}
+\hlkwd{omnibus}\hlstd{(y,X,}\hlkwc{kind}\hlstd{=}\hlnum{0}\hlstd{)} \hlcom{# method of control variates}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage %%%%%%%%%%%%%%%%%%%%%%%%
+\section{Decomposition} %%%%%%%%%
+\label{DCN} %%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Minimal example}
+\label{DCN Minimal example}
+
+Even though a single hypothesis is tested on the covariate set, the function \textbf{proprius} can obtain the contributions of individual covariates or samples to the test statistic. 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{proprius}\hlstd{(y,X,}\hlkwc{type}\hlstd{=}\hlstr{"samples"}\hlstd{)}
+\hlkwd{proprius}\hlstd{(y,X,}\hlkwc{type}\hlstd{=}\hlstr{"covariates"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-16-1} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-16-2} 
+
+\end{knitrout}
+
+We observe that individual~$2$ contributes negatively to the test statistic, whereas the contributions of individuals~$4$ and $6$ are positive. We also observe that several covariates have large positive contributions. Summing over the individual contributions gives back the test statistic.
+
+
+\subsection{Null distribution}
+\label{DCN Null distribution}
+
+If a significance level~$\alpha$ is specified, then the \mbox{$1-\alpha$}~lower quantile under the null hypothesis is plotted:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{proprius}\hlstd{(y,X,}\hlkwc{type}\hlstd{=}\hlstr{"covariates"}\hlstd{,}\hlkwc{alpha}\hlstd{=}\hlnum{0.05}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-17-1} 
+
+\end{knitrout}
+
+\subsection{Further arguments}
+\label{DCN Further arguments}
+
+Offsets are included as in section~\ref{TOA Offset}, confounding variables are taken into account as in section~\ref{TOA Confounding variable}, and overdispersion is treated as in section~\ref{TOA Overdispersion}. The decompositions have not been implemented for multiple covariate sets.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage %%%%%%%%%%%%%%%%%%%%%%%%
+\section{Genome-wide analysis} %%
+\label{GWA} %%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Data}
+\label{GWA Data}
+
+Suppose the matrix~$\boldsymbol{Y}$ contains expression levels of 7~genes and 5~individuals, and the matrices~$\boldsymbol{V}$ and~$\boldsymbol{W}$ represent two different molecular profiles. Suppose that we furthermore know the locations of the genes ($\boldsymbol{Yloc}$), the locations of the genetic or epigenetic alterations ($\boldsymbol{Vloc}$ and $\boldsymbol{Wloc}$), and the chromosome indicators $\boldsymbol{Ychr}$, $\boldsymbol{Vchr}$ and $\boldsymbol{Wchr}$.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{cbind}\hlstd{(Yloc,Ychr,Y)}
+\end{alltt}
+\begin{verbatim}
+##       Yloc Ychr ind1 ind2 ind3 ind4 ind5
+## gene1   19    1   37   61   21   24    8
+## gene2   52    1   21   10   36    6   14
+## gene3   53    1    6   23   19   14   13
+## gene4   65    1   35   40   15   50   30
+## gene5   80    1    8   24    6   33   18
+## gene6   83    1   27   11   16   14   18
+## gene7   84    1   54   55   16   32   15
+\end{verbatim}
+\begin{alltt}
+\hlkwd{cbind}\hlstd{(Vloc,Vchr,V)}
+\end{alltt}
+\begin{verbatim}
+##     Vloc Vchr ind1 ind2 ind3 ind4 ind5
+## V1     4    1  0.4  0.0  0.7 -1.3  0.3
+## V2    14    1 -0.1 -0.2 -0.6  0.8  0.7
+## V3    19    1 -0.4 -2.2 -0.7 -0.8  0.8
+## V4    34    1  1.3  0.5  0.4 -0.4 -2.2
+## V5    36    1 -0.7  1.6  1.3 -1.4 -0.9
+## V6    51    1  0.6 -1.2  0.3  3.5 -0.2
+## V7    55    1  0.3  1.7 -0.5 -1.2 -0.1
+## V8    81    1  0.2  0.2  1.3  0.2 -0.5
+## V9    83    1  0.9  1.4 -0.3  0.1  0.5
+## V10   91    1 -0.9 -0.9  0.8 -0.9  0.0
+\end{verbatim}
+\begin{alltt}
+\hlkwd{cbind}\hlstd{(Wloc,Wchr,W)}
+\end{alltt}
+\begin{verbatim}
+##    Wloc Wchr ind1 ind2 ind3 ind4 ind5
+## W1   47    1    1    0    0    2    2
+## W2   53    1    0    2    1    1    2
+## W3   54    1    0    0    2    1    2
+## W4   61    1    1    2    1    1    1
+## W5   69    1    1    1    2    1    1
+## W6   90    1    1    2    1    2    1
+## W7   91    1    1    1    1    1    1
+## W8   93    1    0    2    0    2    1
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\subsection{Minimal example}
+\label{GWA Minimal example}
+
+We are interested in testing the expression of each gene for associations with \textit{local} genetic or epigenetic alterations.
+
+Setting the argument window to~$5$ entails that each gene is tested for association with all covariates that are located no further than $5$~units from the gene. In this example the covariates of interest are:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+## gene1: V3 
+## gene2: V6 V7 
+## gene3: V6 V7 
+## gene4:  
+## gene5: V8 V9 
+## gene6: V8 V9 
+## gene7: V8 V9
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+The chromosome-wide analysis will not return any \mbox{$p$-value} for gene~$4$, because no covariates are in its vicinity.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{set.seed}\hlstd{(}\hlnum{1}\hlstd{)}
+\hlkwd{cursus}\hlstd{(Y,Yloc,V,Vloc,}\hlkwc{window}\hlstd{=}\hlnum{5}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\subsection{Multiple chromosomes}
+\label{GWA Mutiple chromosomes}
+
+If multiple chromosomes are analysed, it is important to include the chromosome indicators. They make sure that genes are mapped to covariates on the same chromosome:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{set.seed}\hlstd{(}\hlnum{1}\hlstd{)}
+\hlkwd{cursus}\hlstd{(Y,Yloc,V,Vloc,}\hlkwc{window}\hlstd{=}\hlnum{5}\hlstd{,Ychr,Vchr)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\subsection{Different library sizes}
+\label{GWA Different library sizes}
+
+To account for different sequencing depths, an offset can be included:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{offset} \hlkwb{<-} \hlkwd{colSums}\hlstd{(Y)} \hlcom{# library sizes}
+\hlkwd{set.seed}\hlstd{(}\hlnum{1}\hlstd{)}
+\hlkwd{cursus}\hlstd{(Y,Yloc,V,Vloc,}\hlkwc{window}\hlstd{=}\hlnum{5}\hlstd{,}\hlkwc{offset}\hlstd{=offset)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+Otherwise the offset is calculated based on $\boldsymbol{Y}$.
+
+\newpage
+
+\subsection{Multiple molecular profiles}
+\label{GWA Multiple molecular profiles}
+
+For the simultaneous analysis of multiple molecular profiles, the function \textbf{cursus} expects one covariate matrix, one location vector and one window size for each profile.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{set.seed}\hlstd{(}\hlnum{1}\hlstd{)}
+\hlkwd{cursus}\hlstd{(Y,Yloc,}\hlkwd{list}\hlstd{(V,W),}\hlkwd{list}\hlstd{(Vloc,Wloc),}\hlkwd{list}\hlstd{(}\hlnum{5}\hlstd{,}\hlnum{50}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+##            joint    teststat  single.1   single.2
+## gene1 0.01666667  3.03041885 0.1333333 0.05000000
+## gene2 0.28333333  1.02593007 0.5500000 0.08333333
+## gene3 0.77500000 -1.00030785 0.7583333 0.62500000
+## gene4         NA         NaN        NA 0.27500000
+## gene5 0.54166667 -0.03586313 0.5250000 0.47500000
+## gene6 0.58333333 -0.54128922 0.8416667 0.23333333
+## gene7 0.22500000  0.82337451 0.5083333 0.17500000
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\subsection{Further arguments}
+\label{GWA Further arguments}
+
+Confounding variables are taken into account as in section~\ref{TOA Confounding variable}. By setting \verb+phi=rep(0,q)+ where \verb+q+ is the number of genes, the user can restrict the negative binomial distribution to the Poisson distribution. By default, offsets and dispersion parameters are calculated internally, but they can also be inserted. The following example uses the R package \textbf{edgeR} from Bioconductor:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{list} \hlkwb{<-} \hlstd{edgeR}\hlopt{::}\hlkwd{DGEList}\hlstd{(}\hlkwc{counts}\hlstd{=Y)}
+\hlstd{list} \hlkwb{<-} \hlstd{edgeR}\hlopt{::}\hlkwd{calcNormFactors}\hlstd{(list)}
+\hlstd{list} \hlkwb{<-} \hlstd{edgeR}\hlopt{::}\hlkwd{estimateDisp}\hlstd{(list)}
+\hlstd{offset} \hlkwb{<-} \hlstd{list}\hlopt{$}\hlstd{samples}\hlopt{$}\hlstd{norm.factors}
+\hlstd{phi} \hlkwb{<-} \hlstd{list}\hlopt{$}\hlstd{tagwise.dispersion}
+
+\hlkwd{cursus}\hlstd{(Y,Yloc,V,Vloc,}\hlkwc{window}\hlstd{=}\hlnum{5}\hlstd{,}\hlkwc{offset}\hlstd{=offset,}\hlkwc{phi}\hlstd{=phi)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\newpage
+
+\section*{References}
+
+The R package \textbf{globalSeq} is based on Rauschenberger et al.~\cite{Rauschenberger2016}, where detailed references to previous work are given. If you use \textbf{globalSeq} for publications, please cite Rauschenberger et al.~\cite{Rauschenberger2016}.
+\newline \newline
+Based on calculations from le Cessie and van Houwelingen~\cite{leCessie1995} and using the generalised linear modelling framework from McCullagh et al.~\cite{McCullagh1989}, 
+Goeman et al.~\cite{Goeman2004} showed how to test for association between a response variable from the exponential family of distributions and a high-dimensional covariate set, and derived the contributions of samples and covariates to the test statistic.
+Menezes et al.~\cite{Menezes2015} extended this test to multiple covariate sets.
+Rauschenberger et al.~\cite{Rauschenberger2016} adapted the methods from Goeman et al.~\cite{Goeman2004} and Menezes et al.~\cite{Menezes2015} to the negative binomial distribution with an unknown dispersion parameter.
+This permutation test was made computationally efficient using ideas from Wieringen et al.~\cite{Wieringen2008} and Senchaudhuri et al.~\cite{Senchaudhuri1995}.
+
+\begingroup
+\renewcommand{\section}[2]{}%
+\bibliography{globalSeq}
+\endgroup
+
+\end{document}

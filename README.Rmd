@@ -1,0 +1,57 @@
+---
+output:
+  md_document:
+    variant: markdown_github
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+__Scope__
+
+Testing for association between RNA-Seq and other genomic data
+is challenging due to high variability of the former and high dimensionality of the
+latter.
+
+Using the negative binomial distribution and a random effects model,
+we developed an omnibus test that overcomes both difficulties. It may be
+conceptualised as a test of overall significance in regression analysis, where the
+response variable is overdispersed and the number of explanatory variables
+exceeds the sample size.
+
+The proposed test can detect genetic and epigenetic alterations
+that affect gene expression. It can examine complex regulatory mechanisms of
+gene expression.
+
+__Installation__
+
+The package globalSeq depends on [R >= 3.3](https://cran.r-project.org/), and is available from Bioconductor:
+```{r eval=FALSE}
+source("https://bioconductor.org/biocLite.R")
+BiocInstaller::biocLite("globalSeq")
+```
+
+Alternatively, it can be installed from [GitHub](https://github.com). This requires the package [devtools](https://cran.r-project.org/web/packages/devtools/README.html):
+```{r eval=FALSE}
+devtools::install_github("Bioconductor-mirror/globalSeq")
+```
+
+Please restart R before loading the package and its documentation:
+```{r eval=FALSE}
+library(globalSeq)
+utils::help(globalSeq)
+utils::vignette("globalSeq")
+```
+
+__Reference__
+
+A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes.
+Testing for association between RNA-Seq and high-dimensional data.
+Manuscript in preparation.

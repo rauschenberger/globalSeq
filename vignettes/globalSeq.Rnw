@@ -19,17 +19,13 @@ This vignette explains how to use the R~package \textbf{globalSeq}. The function
 \section{Initialisation}
 \label{Initialisation}
 
-Start with installing the R package \textbf{globalSeq}:
+Start with installing the R package \textbf{globalSeq} from Bioconductor:
 <<eval=FALSE>>=
-# from GitHub (development version)
-tools::install_github("rauschenberger/globalSeq")
-
-# from Bioconductor (coming soon)
 source("https://bioconductor.org/biocLite.R")
 BiocInstaller::biocLite("globalSeq")
 @
 
-Please restart R before loading and attaching the package:
+Please type the following command to load and attach the package:
 <<>>=
 library(globalSeq)
 @
@@ -81,6 +77,8 @@ set.seed(1)
 omnibus(y,X)
 @
 
+\newpage
+
 \subsection{Offset}
 \label{TOA Offset}
 
@@ -109,6 +107,8 @@ set.seed(1)
 omnibus(y,X,group=group)
 @
 
+\newpage
+
 \subsection{Overdisperion}
 \label{TOA Overdispersion}
 
@@ -132,7 +132,7 @@ We are interested in testing for associations between $\boldsymbol{y}$ on one ha
 set.seed(1)
 omnibus(y,list(X1,X2))
 @
-The output includes the \mbox{$p$-value} and the test statistic for the joint test, as well as the \mbox{$p$-values} for the individual tests.
+The output includes the \mbox{$p$-value} and the test statistic for the joint test, the \mbox{$p$-values} for the individual tests, and the numbers of tested covariates.
 
 \subsection{P-values}
 \label{TOA P-values}
@@ -145,8 +145,6 @@ omnibus(y,X,kind=0.05) # interrupting permutation
 omnibus(y,X,kind=0) # method of control variates
 @
 
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage %%%%%%%%%%%%%%%%%%%%%%%%
 \section{Decomposition} %%%%%%%%%
@@ -157,7 +155,7 @@ omnibus(y,X,kind=0) # method of control variates
 \label{DCN Minimal example}
 
 Even though a single hypothesis is tested on the covariate set, the function \textbf{proprius} can obtain the contributions of individual covariates or samples to the test statistic. 
-<<results='hide',fig.width=5,fig.height=3,fig.show='hold'>>=
+<<results='hide',fig.width=5,fig.height=2.5,fig.show='hold'>>=
 proprius(y,X,type="samples")
 proprius(y,X,type="covariates")
 @
@@ -234,6 +232,8 @@ cursus(Y,Yloc,V,Vloc,window=5,offset=offset)
 @
 Otherwise the offset is calculated based on $\boldsymbol{Y}$.
 
+\newpage
+
 \subsection{Multiple molecular profiles}
 \label{GWA Multiple molecular profiles}
 
@@ -247,43 +247,33 @@ cursus(Y,Yloc,list(V,W),list(Vloc,Wloc),list(5,50))
 \subsection{Further arguments}
 \label{GWA Further arguments}
 
-Confounding variables are taken into account as in section~\ref{TOA Confounding variable}. The user can choose between the negative binomial distribution (\verb+disp=TRUE+) and the Poisson distribution (\verb+disp=FALSE+).
+Confounding variables are taken into account as in section~\ref{TOA Confounding variable}. By setting \verb+phi=rep(0,q)+ where \verb+q+ is the number of genes, the user can restrict the negative binomial distribution to the Poisson distribution. By default, offsets and dispersion parameters are calculated internally, but they can also be inserted. The following example uses the R package \textbf{edgeR} from Bioconductor:
+
+<<eval=FALSE>>=
+list <- edgeR::DGEList(counts=Y)
+list <- edgeR::calcNormFactors(list)
+list <- edgeR::estimateDisp(list)
+offset <- list$samples$norm.factors
+phi <- list$tagwise.dispersion
+
+cursus(Y,Yloc,V,Vloc,window=5,offset=offset,phi=phi)
+@
+
+\newpage
 
 \section*{References}
 
-% The R package \textbf{globalSeq} is based on Rauschenberger et al.~(2015), where detailed references to previous work are given. If you use \textbf{globalSeq} for publications, please cite Rauschenberger et al.~(2015).
-% \newline \newline
-% Based on calculations from le Cessie and van Houwelingen~(1995) and using the generalised linear modelling framework from McCullagh et al.~(1989), 
-% Goeman et al.~(2004) showed how to test for association between a response variable from the exponential family of distributions and a high-dimensional covariate set, and derived the contributions of samples and covariates to the test statistic.
-% Menezes et al.~(2015) extended this test to multiple covariate sets.
-% Rauschenberger et al.~(2015) adapted the methods from Goeman et al.~(2004) and Menezes et al.~(2015) to the negative binomial distribution with an unknown dispersion parameter.
-% This permutation test was made computationally efficient using ideas from Wieringen et al.~(2008) (interrupting permutation) and Senchaudhuri et al.~(1995) (method of control variates). \newline
-
-The R package \textbf{globalSeq} is based on Rauschenberger et al.~\cite{Rauschenberger2015}, where detailed references to previous work are given. If you use \textbf{globalSeq} for publications, please cite Rauschenberger et al.~\cite{Rauschenberger2015}.
+The R package \textbf{globalSeq} is based on Rauschenberger et al.~\cite{Rauschenberger2016}, where detailed references to previous work are given. If you use \textbf{globalSeq} for publications, please cite Rauschenberger et al.~\cite{Rauschenberger2016}.
 \newline \newline
 Based on calculations from le Cessie and van Houwelingen~\cite{leCessie1995} and using the generalised linear modelling framework from McCullagh et al.~\cite{McCullagh1989}, 
 Goeman et al.~\cite{Goeman2004} showed how to test for association between a response variable from the exponential family of distributions and a high-dimensional covariate set, and derived the contributions of samples and covariates to the test statistic.
 Menezes et al.~\cite{Menezes2015} extended this test to multiple covariate sets.
-Rauschenberger et al.~\cite{Rauschenberger2015} adapted the methods from Goeman et al.~\cite{Goeman2004} and Menezes et al.~\cite{Menezes2015} to the negative binomial distribution with an unknown dispersion parameter.
-This permutation test was made computationally efficient using ideas from Wieringen et al.~\cite{Wieringen2008} (interrupting permutation) and Senchaudhuri et al.~\cite{Senchaudhuri1995} (method of control variates).
+Rauschenberger et al.~\cite{Rauschenberger2016} adapted the methods from Goeman et al.~\cite{Goeman2004} and Menezes et al.~\cite{Menezes2015} to the negative binomial distribution with an unknown dispersion parameter.
+This permutation test was made computationally efficient using ideas from Wieringen et al.~\cite{Wieringen2008} and Senchaudhuri et al.~\cite{Senchaudhuri1995}.
 
 \begingroup
 \renewcommand{\section}[2]{}%
 \bibliography{globalSeq}
 \endgroup
-
-% Goeman, J.J., van de Geer, S.A., de Kort, F. and van Houwelingen, H.C.~(2004). "A global test for groups of genes: testing association with a clinical outcome", in~\textit{Bioinformatics}, Vol.~20, pp.~93--99. \newline \newline
-% %
-% le Cessie, S. and van Houwelingen, H.C.~(1995). "Testing the fit of a regression model via score tests in random effects models", in~\textit{Biometrics}, Vol.~51, pp.~600--614. \newline \newline
-% %
-% McCullagh, P. and Nelder, J.A.~(1989). "Generalized linear models. 2nd ed", Chapman and Hall, London. \newline \newline
-% %
-% Menezes, R.X. and Mohammadi, L. and Goeman, J.J. and Boer, J.~(2015). "Analysing multiple types of molecular profiles simultaneously: connecting the needles in the haystack", \textit{Public Preprint}, \mbox{arXiv}:1510.02329 [stat.ME]. \newline \newline
-% %
-% Rauschenberger, A., Jonker, M.A., van de Wiel, M.A. and Menezes, R.X.~(2015). "Testing for association between \mbox{RNA-Seq} and high-dimensional data", \textit{Manuscript in preparation}. \newline \newline
-% %
-% Senchaudhuri, P. and Mehta, C.R. and Patel, N.R.~(1995). "Estimating exact p values by the method of control variates or Monte Carlo rescue", in~\textit{Journal of the American Statistical Association}, Vol.~90, pp.~640--648. \newline \newline
-% %
-% van Wieringen, W.N., van de Wiel, M.A. and van der Vaart, A.W.~(2008). "A test for partial differential expression", in~\textit{Journal of the American Statistical Association}, Vol.~103, pp.~1039--1049. \newline \newline
 
 \end{document}

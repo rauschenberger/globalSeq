@@ -38,8 +38,7 @@ factor of length \code{n}}
 \item{perm}{number of iterations\strong{:}
 positive integer}
 
-\item{phi}{dispersion parameter\strong{:}
-non-negative real number}
+\item{phi}{dispersion parameters\strong{:} vector of length \code{q}}
 
 \item{kind}{computation \strong{:}
 number between 0 and 1}

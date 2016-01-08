@@ -1,5 +1,13 @@
 
-############### Documentation ###############
+
+
+############### Documentation ################
+
+#' @keywords documentation
+#' @rdname globalSeq
+#' @docType package
+#' @name globalseq
+NULL
 
 #' Toydata
 #' 
@@ -146,6 +154,7 @@ intern.estim <- function(y, offset = NULL) {
 #' @export
 #' @keywords misc
 #' 
+#' @inheritParams omnibus
 #' @param n
 #' Number of samples.
 #' @param it
@@ -171,24 +180,29 @@ intern.estim <- function(y, offset = NULL) {
 #' @examples
 #' group <- as.factor(c('A','A','B','B','B'))
 #' set.seed(1)
-#' intern.permu(n=5,it=1000,group=group)
+#' intern.permu(n=5,it=1000,group=group,kind=1)
 #' 
-intern.permu <- function(n, it, group) {
-    if (is.null(group)) {
-        temp <- matrix(NA, nrow = n, ncol = it + 1)
-        temp[, 1] <- 1:n
-        temp[, -1] <- replicate(it, sample(1:n))
-        unique(temp, MARGIN = 2)
-    } else {
-        levels <- unique(group)
-        temp <- matrix(NA, nrow = n, ncol = it + 1)
-        temp[, 1] <- 1:n
-        for (i in 1:length(levels)) {
-            which <- group == levels[i]
-            temp[which, -1] <- replicate(it, sample((1:n)[which]))
+intern.permu <- function(n, it, group, kind) {
+        it <- it + 1 # new
+        if (is.null(group)) {
+            temp <- matrix(NA, nrow = n, ncol = it + 1)
+            temp[, 1] <- 1:n
+            temp[, -1] <- replicate(it, sample(1:n))
+        } else {
+            levels <- unique(group)
+            temp <- matrix(NA, nrow = n, ncol = it + 1)
+            temp[, 1] <- 1:n
+            for (i in 1:length(levels)) {
+                which <- group == levels[i]
+                temp[which, -1] <- replicate(it, sample((1:n)[which]))
+            }
         }
-        unique(temp, MARGIN = 2)
-    }
+        # unique(temp,MARGIN=2) # old
+        if(kind==0){ # new
+            cbind(temp[,1],unique(temp[,-1],MARGIN=2)) # new
+        } else { # new
+            unique(temp[,-(it+1)], MARGIN = 2) # new
+        } # new
 }
 
 #' Internal function
@@ -315,7 +329,7 @@ intern.score <- function(y, R, mu, phi) {
 #' 
 #' @seealso
 #' 
-#' These are an \code{\link{internal}} functions. The user functions 
+#' These are \code{\link{internal}} functions. The user functions 
 #' of the R package \code{\link{globalSeq}} are \code{\link{cursus}},
 #' \code{\link{omnibus}}, and \code{\link{proprius}}.
 #' 
@@ -324,20 +338,19 @@ intern.score <- function(y, R, mu, phi) {
 #' # simulate high-dimensional data
 #' n <- 30
 #' p <- 100
-#' set.seed(1)
+#' # set.seed(1)
 #' y <- rnbinom(n,mu=10,size=1/0.25)
 #' X <- matrix(rnorm(n*p),nrow=n,ncol=p)
 #' 
 #' # prepare arguments
 #' mu <- rep(mean(y),n)
 #' phi <- (var(y)-mu)/mu^2
-#' perm <- intern.permu(n=n,it=100,group=NULL)
+#' perm <- intern.permu(n=n,it=99,group=NULL,kind=1)
 #' 
 #' # perform tests
 #' intern.crude(y,X,mu,phi,perm)
-#' intern.focus(y,X,mu,phi,perm,0.05)
+#' intern.focus(y,X,mu,phi,perm,focus=0.01)
 #' intern.conva(y,X,mu,phi,perm,NULL)
-#' # globaltest::gt(y~X) gives pstar
 #' 
 intern.crude <- function(y, X, mu, phi, perm) {
     if (ncol(X) == 0) {
@@ -348,23 +361,22 @@ intern.crude <- function(y, X, mu, phi, perm) {
         teststat <- NA
     } else {
         R <- X %*% t(X)/ncol(X)
-        nb_sim <- apply(perm, 2, function(perm) intern.score(y = y[perm], 
+        nb_sim <- apply(perm, 2, function(perm) globalSeq::intern.score(y = y[perm], 
             R = R, mu = mu[perm], phi = phi))
         pvalue <- sum(nb_sim >= nb_sim[1])/ncol(perm)
         teststat <- nb_sim[1]
     }
-    data.frame(pvalue = pvalue, teststat = teststat)
+    data.frame(pvalue = pvalue, teststat = teststat, covs=ncol(X))
 }
 #' @export
 #' @keywords misc
 #' @rdname intern.crude
 intern.focus <- function(y, X, mu, phi, perm, focus) {
-    # focus <- 0.01 # SHOULD BECOME AN ARGUMENT !!!
     if (ncol(X) == 0) {
         pvalue <- NA
         teststat <- NA
     } else if (sum(y) == 0) {
-        pvalue <- 1  # was: pvalue <- focus
+        pvalue <- 1
         teststat <- NA
     } else {
         R <- X %*% t(X)/ncol(X)
@@ -377,7 +389,7 @@ intern.focus <- function(y, X, mu, phi, perm, focus) {
         for (j in 1:(length(pos) - 1)) {
             if (z < target & i <= it) {
                 for (i in pos[j]:(pos[j + 1] - 1)) {
-                  sim[i] <- intern.score(y = y[perm[, i]], R = R, mu = mu[perm[, 
+                  sim[i] <- globalSeq::intern.score(y = y[perm[, i]], R = R, mu = mu[perm[, 
                     i]], phi = phi)
                 }
                 z <- z + sum(sim[pos[j]:(pos[j + 1] - 1)] >= sim[1])
@@ -390,7 +402,7 @@ intern.focus <- function(y, X, mu, phi, perm, focus) {
         pvalue <- z/i  # new
         teststat <- sim[1]
     }
-    data.frame(pvalue = pvalue, teststat = teststat)
+    data.frame(pvalue = pvalue, teststat = teststat, covs=ncol(X))
 }
 #' @export
 #' @keywords misc
@@ -398,23 +410,27 @@ intern.focus <- function(y, X, mu, phi, perm, focus) {
 intern.conva <- function(y, X, mu, phi, perm, offset) {
     if (ncol(X) == 0) {
         out <- data.frame(pvalue = NA, teststat = NA, rausch = NA, goeman = NA, 
-            cor = NA, pstar = NA)
+            cor = NA, pstar = NA, covs = 0)
     } else if (length(unique(y))<=1) { # was sum(y)==0
         out <- data.frame(pvalue = 1, teststat = 0, rausch = 1, goeman = 1, 
-            cor = 1, pstar = NA)
+            cor = 1, pstar = NA, covs = ncol(X))
     } else {
         R <- X %*% t(X)/ncol(X)
         it <- ncol(perm)
         ### rausch ###
-        nb_sim <- apply(perm, 2, function(perm) intern.score(y = y[perm], 
+        nb_sim <- apply(perm, 2, function(perm) globalSeq::intern.score(y = y[perm], 
             R = R, mu = mu[perm], phi = phi))
-        nb <- nb_sim >= nb_sim[1]
-        p_nb <- sum(nb)/it
+        # nb <- nb_sim >= nb_sim[1] ### original
+        # p_nb <- sum(nb)/it ### original
+        nb <- nb_sim[-1] >= nb_sim[1] ### unbiased
+        p_nb <- sum(nb)/(it-1) ### unbiased
         ### goeman ###
         gt_sim <- apply(perm, 2, function(perm) t(y[perm] - mean(y)) %*% 
             R %*% (y[perm] - mean(y))/var(y))
-        gt <- gt_sim >= gt_sim[1]
-        p_gt <- sum(gt)/it
+        # gt <- gt_sim >= gt_sim[1] ### original
+        # p_gt <- sum(gt)/it ### original
+        gt <- gt_sim[-1] >= gt_sim[1] ### unbiased
+        p_gt <- sum(gt)/(it-1) ### unbiased
         ### pstar ### pstar <- globaltest::p.value(globaltest::gt(y,~X)) # old
         if(!is.null(offset)){y <- offset*y}
         n <- length(y)
@@ -430,17 +446,20 @@ intern.conva <- function(y, X, mu, phi, perm, offset) {
         ### monte carlo rescue ###
         D <- nb - gt + pstar
         p <- sum(D)/it
-        if (p < 0 | p > 1) {
-            if (p < 0) {
-                p <- 0
+        if(!is.na(p)){ # new line
+            if (p < 0 | p > 1) {
+                if (p < 0) {
+                    p <- 0
+                }
+                if (p > 1) {
+                    p <- 1
+                }
             }
-            if (p > 1) {
-                p <- 1
-            }
-        }
+        } # new line
         cor <- cor(nb, gt)
-        out <- data.frame(pvalue = p, teststat = nb_sim[1], rausch = p_nb, 
-            goeman = p_gt, cor = round(cor, 2), pstar = pstar)
+        out <- data.frame(pvalue = p, teststat = nb_sim[1], covs = ncol(X),
+                          rausch = p_nb, goeman = p_gt, cor = round(cor, 2),
+                          pstar = pstar)
         #SE_pvalue = sqrt(sum((D - p)^2)/(it - 1))
         #SE_rausch = sqrt(p_nb * (1 - p_nb)/it)
         #SE_goeman = sqrt(p_gt * (1 - p_gt)/it)
@@ -676,7 +695,7 @@ intern.plot <- function(u, upper = NULL, xlab = "indices") {
 #' 
 intern.select <- function(i, Y, Ystart, Yend, X, Xloc, window, offset, 
     group, perm, phi, kind) {
-    Y <- intern.matrix(Y)
+    Y <- globalSeq::intern.matrix(Y)
     if (class(X) == "matrix" | class(X) == "data.frame") {
         sel <- Ystart[i] - window <= Xloc & Xloc <= Yend[i] + window
         y <- Y[i, ]
@@ -684,8 +703,8 @@ intern.select <- function(i, Y, Ystart, Yend, X, Xloc, window, offset,
         if (nrow(Xsel) == 0) {
             out <- NA
         } else {
-            out <- omnibus(y = y, X = Xsel, offset = offset, group = group, 
-                perm = perm, phi = phi, kind = kind)
+            out <- globalSeq::omnibus(y = y, X = Xsel, offset = offset, group = group, 
+                perm = perm, phi = phi[i], kind = kind) # was phi = phi instead of phi = phi[i]
         }
     } else {
         Xsel <- list()
@@ -698,8 +717,8 @@ intern.select <- function(i, Y, Ystart, Yend, X, Xloc, window, offset,
         if (any(sapply(X, nrow) == 0)) {
             NA
         } else {
-            out <- omnibus(y = y, X = Xsel, offset = offset, group = group, 
-                perm = perm, phi = phi, kind = kind)
+            out <- globalSeq::omnibus(y = y, X = Xsel, offset = offset, group = group, 
+                perm = perm, phi = phi[i], kind = kind) # was phi = phi instead of phi = phi[i]
             # instead of out was temp, out <- c(temp$joint,temp$single) new
             # names(out) <- c('joint',paste('single',
             # 1:length(temp$single),sep='')) # new
@@ -765,24 +784,26 @@ intern.select <- function(i, Y, Ystart, Yend, X, Xloc, window, offset,
 #' @usage
 #' intern.chromo(Y, Ystart, Yend, X, Xloc,
 #'              window, offset, group, perm,
-#'              nodes, disp, kind) 
+#'              nodes, phi, kind) 
 #' 
 intern.chromo <- function(Y, Ystart, Yend, X, Xloc, window, offset, group, 
-    perm, nodes, disp, kind) {
-    Y <- intern.matrix(Y)
-    if (disp == FALSE) {
-        phi <- 0
-    } else {
-        phi <- NULL
-    }
+    perm, nodes, phi, kind) { # was disp instead of phi
+    Y <- globalSeq::intern.matrix(Y)
+   # if (disp == FALSE) { # was active
+   #     phi <- 0 # was active
+   # } else { # was active
+   #     phi <- NULL # was active
+   # } # was active
     if (nodes == 1) {
-        out <- sapply(1:nrow(Y), function(i) intern.select(i = i, Y = Y, 
+        out <- sapply(1:nrow(Y), function(i) globalSeq::intern.select(i = i, Y = Y, 
             Ystart = Ystart, Yend = Yend, X = X, Xloc = Xloc, window = window, 
             offset = offset, group = group,
             perm = perm, phi = phi, kind = kind))
     } else {
         cluster <- parallel::makeCluster(nodes)
-        parallel::clusterExport(cluster, "intern.select")
+        intern.select <- globalSeq::intern.select # new
+        parallel::clusterExport(cluster, "intern.select",envir=environment()) # new
+        # parallel::clusterExport(cluster, "intern.select") # old
         parallel::clusterExport(cluster, c("Ystart", "Y", "Yend", "X", 
             "Xloc", "window", "offset", "group", "perm", "phi", "kind"), 
             envir = environment())

@@ -8,7 +8,7 @@ cursus(Y, Yloc, X, Xloc, window,
         Ychr = NULL, Xchr = NULL,
         offset = NULL, group = NULL,
         perm = 1000, nodes = 2,
-        disp = TRUE, kind = 0.01)
+        phi = NULL, kind = 0.01)
 }
 \arguments{
 \item{Y}{\strong{RNA-Seq data}\strong{:}
@@ -48,8 +48,7 @@ positive integer}
 
 \item{nodes}{number of cluster nodes for parallel computation}
 
-\item{disp}{overdispersion relative to the Poisson model\strong{:}
-logical}
+\item{phi}{dispersion parameters\strong{:} vector of length \code{q}}
 
 \item{kind}{computation \strong{:}
 number between 0 and 1}
@@ -111,10 +110,7 @@ and permutation in chunks (0 < \code{kind} < 1)
 }
 \examples{
 # simulate high-dimensional data
-n <- 30
-q <- 10
-p <- 100
-set.seed(1)
+n <- 30; q <- 10; p <- 100
 Y <- matrix(rnbinom(q*n,mu=10,
     size=1/0.25),nrow=q,ncol=n)
 X <- matrix(rnorm(p*n),nrow=p,ncol=n)
@@ -123,7 +119,7 @@ Xloc <- seq(0,1,length.out=p)
 window <- 1
 
 # hypothesis testing
-cursus(Y,Yloc,X,Xloc,window) 
+cursus(Y,Yloc,X,Xloc,window)
 
 }
 \references{

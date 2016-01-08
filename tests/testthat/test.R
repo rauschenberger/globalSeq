@@ -312,7 +312,7 @@ testthat::test_that("conversion to matrix works",{
     # create data structure
     Z <- SummarizedExperiment::SummarizedExperiment(S4Vectors::SimpleList(counts=Y))
     # conversion
-    testthat::expect_identical(Y,intern.matrix(Z))
+    testthat::expect_identical(Y,globalSeq::intern.matrix(Z))
 })
 
 testthat::test_that("calculating offset inside or outside cursus is equivalent",{

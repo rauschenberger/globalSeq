@@ -23,8 +23,8 @@ distribution by maximum likelihood. It is called by the functions
 We assume the negative binomial distribution \code{y_i ~ NB(mu,phi)},
 where the samples are indexed by \code{i} (\code{i=1,...,n}).
 Our parametrisation leads to \code{E[y]= mu} 
-and \code{Var[y]= mu + phi mu^2}.
-With the offset \code{a} the model becomes \code{y_i ~ NB(a_i*mu,phi)},
+and \code{Var[y]= mu + phi*mu^2}.
+With the an offset the model becomes \code{y_i ~ NB(a_i*mu,phi)},
 where the \code{a_i} are known.
 }
 \examples{
@@ -34,10 +34,12 @@ intern.estim(y)
 
 }
 \references{
-A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes.
-Testing for association between RNA-Seq
-and high-dimensional data. Manuscript in preparation.
-\link[=globalSeq]{abstract}.
+A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes (2016).
+"Testing for association between RNA-Seq and high-dimensional data",
+\emph{BMC Bioinformatics}. 17:118.
+\href{http://dx.doi.org/10.1186/s12859-016-0961-5}{html}
+\href{http://www.biomedcentral.com/content/pdf/s12859-016-0961-5.pdf}{pdf}
+(open access)
 }
 \seealso{
 This is an \code{\link{internal}} function. The user functions

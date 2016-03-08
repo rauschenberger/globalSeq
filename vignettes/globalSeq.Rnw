@@ -137,12 +137,12 @@ The output includes the \mbox{$p$-value} and the test statistic for the joint te
 \subsection{P-values}
 \label{TOA P-values}
 
-When testing single covariate sets, the user can choose between three different types of \mbox{$p$-values}. By default \mbox{$p$-values} are calculated by permutation without repetitions ($\mathrm{kind}=1$). Alternatively, permutation can be interrupted when it becomes impossible to reach a predefined significance level ($0 < \mathrm{kind} < 1$), or the method of control variates can be used ($\mathrm{kind}=0$).
+When testing single covariate sets, the user can choose between three different types of \mbox{$p$-values}. By default \mbox{$p$-values} are calculated by permutation without repetitions ($\mathrm{kind}=1$). Alternatively, permutation can be interrupted when it becomes impossible to reach a predefined significance level ($0 < \mathrm{kind} < 1$), or the method of control variables can be used ($\mathrm{kind}=0$).
 
 <<results='hide'>>=
 omnibus(y,X,kind=1) # crude permutation test
 omnibus(y,X,kind=0.05) # interrupting permutation
-omnibus(y,X,kind=0) # method of control variates
+omnibus(y,X,kind=0) # method of control variables
 @
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -267,8 +267,8 @@ The R package \textbf{globalSeq} is based on Rauschenberger et al.~\cite{Rausche
 \newline \newline
 Based on calculations from le Cessie and van Houwelingen~\cite{leCessie1995} and using the generalised linear modelling framework from McCullagh et al.~\cite{McCullagh1989}, 
 Goeman et al.~\cite{Goeman2004} showed how to test for association between a response variable from the exponential family of distributions and a high-dimensional covariate set, and derived the contributions of samples and covariates to the test statistic.
-Menezes et al.~\cite{Menezes2015} extended this test to multiple covariate sets.
-Rauschenberger et al.~\cite{Rauschenberger2016} adapted the methods from Goeman et al.~\cite{Goeman2004} and Menezes et al.~\cite{Menezes2015} to the negative binomial distribution with an unknown dispersion parameter.
+Menezes et al.~\cite{Menezes2016} extended this test to multiple covariate sets.
+Rauschenberger et al.~\cite{Rauschenberger2016} adapted the methods from Goeman et al.~\cite{Goeman2004} and Menezes et al.~\cite{Menezes2016} to the negative binomial distribution with an unknown dispersion parameter.
 This permutation test was made computationally efficient using ideas from Wieringen et al.~\cite{Wieringen2008} and Senchaudhuri et al.~\cite{Senchaudhuri1995}.
 
 \begingroup

@@ -6,12 +6,12 @@ citEntry(entry="Article",
                              as.person("Marianne A. Jonker"), 
                              as.person("Mark A. van de Wiel"), 
                              as.person("Renee X. Menezes")),
-    journal = "Manuscript in preparation",
-    year = 2015,
+    journal = "BMC Bioinformatics",
+    volume= 17,
+    pages = 118,
+    year = 2016,
     textVersion =
-		paste("Armin Rauschenberger, Marianne A. Jonker, Mark A. van de Wiel, and Renee X. Menezes.",
+		paste("Armin Rauschenberger, Marianne A. Jonker, Mark A. van de Wiel, and Renee X. Menezes (2016).",
 		"Testing for association between RNA-Seq and high-dimensional data.",
-        	"Manuscript in preparation. 2015.")
+        	"BMC Bioinformatics","17:118")
 )
-
-citEntry()

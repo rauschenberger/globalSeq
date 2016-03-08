@@ -37,10 +37,12 @@ intern.permu(n=5,it=1000,group=group,kind=1)
 
 }
 \references{
-A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes.
-Testing for association between RNA-Seq
-and high-dimensional data. Manuscript in preparation.
-\link[=globalSeq]{abstract}.
+A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes (2016).
+"Testing for association between RNA-Seq and high-dimensional data",
+\emph{BMC Bioinformatics}. 17:118.
+\href{http://dx.doi.org/10.1186/s12859-016-0961-5}{html}
+\href{http://www.biomedcentral.com/content/pdf/s12859-016-0961-5.pdf}{pdf}
+(open access)
 }
 \seealso{
 This is an \code{\link{internal}} function. The user functions

@@ -45,7 +45,7 @@ to increase precision and decrease computational expense.
 }
 \details{
 The function \code{\link{intern.focus}}
- uses permutations in chunks.
+uses permutations in chunks.
 If the remaining permutations do not allow
 to reach a specified significance level,
 it stops and rounds the p-value to one.
@@ -54,7 +54,7 @@ The function \code{\link{intern.conva}}
 uses the method of control variates
 from Senchaudhuri et al. (1995).
 Roughly speaking, if the test statistics
-from Rauschenberger et al. (2015)
+from Rauschenberger et al. (2016)
 and Goeman et al. (2004) are highly correlated,
 it returns the asymptotic p-value from Goeman et al. (2004).
 }
@@ -79,23 +79,29 @@ intern.conva(y,X,mu,phi,perm,NULL)
 
 }
 \references{
-P Senchaudhuri, CR Mehta, and NR Patel.
-Estimating exact p values by the method of control variates
-or Monte Carlo rescue.
-Journal of the American Statistical Association
-1995;90:640-648
-\href{http://www.jstor.org/stable/2291077}{abstract}
+P Senchaudhuri, CR Mehta, and NR Patel (1995).
+"Estimating exact p values by the method of control variates
+or Monte Carlo rescue",
+\emph{Journal of the American Statistical Association}.
+90:640-648
+\href{http://dx.doi.org/10.2307/2291077}{html}
+\href{http://www.jstor.org/stable/pdf/2291077.pdf?acceptTC=true}{pdf}
+(restricted access)
 
-A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes.
-Testing for association between RNA-Seq
-and high-dimensional data. Manuscript in preparation.
-\link[=globalSeq]{abstract}.
+A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes (2016).
+"Testing for association between RNA-Seq and high-dimensional data",
+\emph{BMC Bioinformatics}. 17:118.
+\href{http://dx.doi.org/10.1186/s12859-016-0961-5}{html}
+\href{http://www.biomedcentral.com/content/pdf/s12859-016-0961-5.pdf}{pdf}
+(open access)
 
-JJ Goeman, SA van de Geer, F de Kort, and HC van Houwelingen.
-A global test for groups of genes:
-testing association with a clinical outcome.
-Bioinformatics 2004;20:93-99.
-\href{http://bioinformatics.oxfordjournals.org/content/20/1/93}{full text}
+JJ Goeman, SA van de Geer, F de Kort, and HC van Houwelingen (2004).
+"A global test for groups of genes:
+testing association with a clinical outcome",
+\emph{Bioinformatics}. 20:93-99.
+\href{http://dx.doi.org/10.1093/bioinformatics/btg382}{html}
+\href{http://bioinformatics.oxfordjournals.org/content/20/1/93.full.pdf}{pdf}
+(open access)
 }
 \seealso{
 These are \code{\link{internal}} functions. The user functions 

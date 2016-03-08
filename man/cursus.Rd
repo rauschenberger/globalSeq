@@ -123,16 +123,20 @@ cursus(Y,Yloc,X,Xloc,window)
 
 }
 \references{
-A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes.
-Testing for association between RNA-Seq
-and high-dimensional data. Manuscript in preparation.
-\link[=globalSeq]{abstract}.
+A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes (2016).
+"Testing for association between RNA-Seq and high-dimensional data",
+\emph{BMC Bioinformatics}. 17:118.
+\href{http://dx.doi.org/10.1186/s12859-016-0961-5}{html}
+\href{http://www.biomedcentral.com/content/pdf/s12859-016-0961-5.pdf}{pdf}
+(open access)
 
-RX Menezes, M Boetzer, M Sieswerda, GJB van Ommen, and JM Boer.
-Integrated analysis of DNA copy number
-and gene expression microarray data using gene sets.
-BMC Bioinformatics 2009;10:203 
-\href{http://www.biomedcentral.com/1471-2105/10/203/}{full text}
+RX Menezes, M Boetzer, M Sieswerda, GJB van Ommen, and JM Boer (2009).
+"Integrated analysis of DNA copy number
+and gene expression microarray data using gene sets",
+\emph{BMC Bioinformatics}. 10:203.
+\href{http://dx.doi.org/10.1186/1471-2105-10-203}{html}
+\href{http://www.biomedcentral.com/content/pdf/1471-2105-10-203.pdf}{pdf}
+(open access)
 }
 \seealso{
 The function \code{\link{omnibus}} tests for associations

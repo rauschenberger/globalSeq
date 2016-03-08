@@ -85,16 +85,28 @@ omnibus(y,X)
 
 }
 \references{
-A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes.
-Testing for association between RNA-Seq
-and high-dimensional data. Manuscript in preparation.
-\link[=globalSeq]{abstract}.
+A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes (2016).
+"Testing for association between RNA-Seq and high-dimensional data",
+\emph{BMC Bioinformatics}. 17:118.
+\href{http://dx.doi.org/10.1186/s12859-016-0961-5}{html}
+\href{http://www.biomedcentral.com/content/pdf/s12859-016-0961-5.pdf}{pdf}
+(open access)
 
-S le Cessie, and HC van Houwelingen.
-Testing the fit of a regression model
-via score tests in random effects models.
-Biometrics 1995;51:600-614.
-\href{http://www.jstor.org/stable/2532948}{full text}
+RX Menezes, L Mohammadi, JJ Goeman, and JM Boer (2016).
+"Analysing multiple types of molecular profiles simultaneously:
+connecting the needles in the haystack",
+\emph{BMC Bioinformatics}. 17:77.
+\href{http://dx.doi.org/10.1186/s12859-016-0926-8}{html}
+\href{http://www.biomedcentral.com/content/pdf/s12859-016-0926-8.pdf}{pdf}
+(open access)
+
+S le Cessie, and HC van Houwelingen (1995).
+"Testing the fit of a regression model 
+via score tests in random effects models",
+\emph{Biometrics}. 51:600-614.
+\href{http://dx.doi.org/10.2307/2532948}{html}
+\href{http://www.jstor.org/stable/pdf/2532948.pdf?acceptTC=true}{pdf}
+(restricted access)
 }
 \seealso{
 The function \code{\link{proprius}} calculates

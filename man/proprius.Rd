@@ -70,21 +70,25 @@ y <- rnbinom(n,mu=10,size=1/0.25)
 X <- matrix(rnorm(n*p),nrow=n,ncol=p)
 
 # decomposition
-proprius(y,X,type='samples')
-proprius(y,X,type='covariates')
+proprius(y,X,type="samples")
+proprius(y,X,type="covariates")
 
 }
 \references{
-A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes.
-Testing for association between RNA-Seq
-and high-dimensional data. Manuscript in preparation.
-\link[=globalSeq]{abstract}.
+A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes (2016).
+"Testing for association between RNA-Seq and high-dimensional data",
+\emph{BMC Bioinformatics}. 17:118.
+\href{http://dx.doi.org/10.1186/s12859-016-0961-5}{html}
+\href{http://www.biomedcentral.com/content/pdf/s12859-016-0961-5.pdf}{pdf}
+(open access)
 
-JJ Goeman, SA van de Geer, F de Kort, and HC van Houwelingen.
-A global test for groups of genes:
-testing association with a clinical outcome.
-Bioinformatics 2004;20:93-99.
-\href{http://bioinformatics.oxfordjournals.org/content/20/1/93}{full text}
+JJ Goeman, SA van de Geer, F de Kort, and HC van Houwelingen (2004).
+"A global test for groups of genes:
+testing association with a clinical outcome",
+\emph{Bioinformatics}. 20:93-99.
+\href{http://dx.doi.org/10.1093/bioinformatics/btg382}{html}
+\href{http://bioinformatics.oxfordjournals.org/content/20/1/93.full.pdf}{pdf}
+(open access)
 }
 \seealso{
 The function \code{\link{omnibus}} tests for associations

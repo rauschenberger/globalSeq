@@ -24,13 +24,16 @@
 #' mechanisms of gene expression.
 #' 
 #' \strong{Reference}
-#' \cr A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes.
-#' Testing for association between RNA-Seq
-#' and high-dimensional data. Manuscript in preparation.
+#' \cr A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes (2016).
+#' "Testing for association between RNA-Seq and high-dimensional data",
+#' \emph{BMC Bioinformatics}. 17:118.
+#' \href{http://dx.doi.org/10.1186/s12859-016-0961-5}{html}
+#' \href{http://www.biomedcentral.com/content/pdf/s12859-016-0961-5.pdf}{pdf}
+#' (open access)
 #' 
 #' @seealso
 #' The following command opens the vignette:
-#' \cr \code{utils::vignette('globalSeq')}
+#' \cr \code{utils::vignette("globalSeq")}
 #' \cr
 #' \cr \code{\link{omnibus}} tests entire covariate sets
 #' \cr \code{\link{proprius}} shows individual contributions
@@ -38,5 +41,6 @@
 #'
 #' @keywords documentation
 #' @docType package
-#' @name globalSeq
+#' @name globalSeq-package
+#' @aliases globalSeq globalseq
 NULL 

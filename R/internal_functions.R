@@ -3,11 +3,11 @@
 
 ############### Documentation ################
 
-#' @keywords documentation
-#' @rdname globalSeq
-#' @docType package
-#' @name globalseq
-NULL
+# #' @keywords documentation
+# #' @rdname globalSeq-package
+# #' @docType package
+# #' @name globalseq
+# NULL
 
 #' Toydata
 #' 
@@ -102,18 +102,21 @@ NULL
 #' We assume the negative binomial distribution \code{y_i ~ NB(mu,phi)},
 #' where the samples are indexed by \code{i} (\code{i=1,...,n}).
 #' Our parametrisation leads to \code{E[y]= mu} 
-#' and \code{Var[y]= mu + phi mu^2}.
-#' With the offset \code{a} the model becomes \code{y_i ~ NB(a_i*mu,phi)},
+#' and \code{Var[y]= mu + phi*mu^2}.
+#' With the an offset the model becomes \code{y_i ~ NB(a_i*mu,phi)},
 #' where the \code{a_i} are known.
 #' 
 #' @return
 #' The function returns a list of numeric vectors.
 #' 
 #' @references
-#' A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes.
-#' Testing for association between RNA-Seq
-#' and high-dimensional data. Manuscript in preparation.
-#' \link[=globalSeq]{abstract}.
+#' 
+#' A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes (2016).
+#' "Testing for association between RNA-Seq and high-dimensional data",
+#' \emph{BMC Bioinformatics}. 17:118.
+#' \href{http://dx.doi.org/10.1186/s12859-016-0961-5}{html}
+#' \href{http://www.biomedcentral.com/content/pdf/s12859-016-0961-5.pdf}{pdf}
+#' (open access)
 #' 
 #' @seealso
 #' This is an \code{\link{internal}} function. The user functions
@@ -167,10 +170,13 @@ intern.estim <- function(y, offset = NULL) {
 #' The function returns a matrix.
 #' 
 #' @references
-#' A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes.
-#' Testing for association between RNA-Seq
-#' and high-dimensional data. Manuscript in preparation.
-#' \link[=globalSeq]{abstract}.
+#' 
+#' A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes (2016).
+#' "Testing for association between RNA-Seq and high-dimensional data",
+#' \emph{BMC Bioinformatics}. 17:118.
+#' \href{http://dx.doi.org/10.1186/s12859-016-0961-5}{html}
+#' \href{http://www.biomedcentral.com/content/pdf/s12859-016-0961-5.pdf}{pdf}
+#' (open access)
 #' 
 #' @seealso
 #' This is an \code{\link{internal}} function. The user functions
@@ -224,10 +230,13 @@ intern.permu <- function(n, it, group, kind) {
 #' The function returns a real number.
 #' 
 #' @references
-#' A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes.
-#' Testing for association between RNA-Seq
-#' and high-dimensional data. Manuscript in preparation.
-#' \link[=globalSeq]{abstract}.
+#' 
+#' A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes (2016).
+#' "Testing for association between RNA-Seq and high-dimensional data",
+#' \emph{BMC Bioinformatics}. 17:118.
+#' \href{http://dx.doi.org/10.1186/s12859-016-0961-5}{html}
+#' \href{http://www.biomedcentral.com/content/pdf/s12859-016-0961-5.pdf}{pdf}
+#' (open access)
 #' 
 #' @seealso
 #' This is an \code{\link{internal}} function. The user functions
@@ -289,7 +298,7 @@ intern.score <- function(y, R, mu, phi) {
 #' @details
 #' 
 #' The function \code{\link{intern.focus}}
-#'  uses permutations in chunks.
+#' uses permutations in chunks.
 #' If the remaining permutations do not allow
 #' to reach a specified significance level,
 #' it stops and rounds the p-value to one.
@@ -298,7 +307,7 @@ intern.score <- function(y, R, mu, phi) {
 #' uses the method of control variates
 #' from Senchaudhuri et al. (1995).
 #' Roughly speaking, if the test statistics
-#' from Rauschenberger et al. (2015)
+#' from Rauschenberger et al. (2016)
 #' and Goeman et al. (2004) are highly correlated,
 #' it returns the asymptotic p-value from Goeman et al. (2004).
 #' 
@@ -309,23 +318,29 @@ intern.score <- function(y, R, mu, phi) {
 #' 
 #' @references
 #' 
-#' P Senchaudhuri, CR Mehta, and NR Patel.
-#' Estimating exact p values by the method of control variates
-#' or Monte Carlo rescue.
-#' Journal of the American Statistical Association
-#' 1995;90:640-648
-#' \href{http://www.jstor.org/stable/2291077}{abstract}
+#' P Senchaudhuri, CR Mehta, and NR Patel (1995).
+#' "Estimating exact p values by the method of control variates
+#' or Monte Carlo rescue",
+#' \emph{Journal of the American Statistical Association}.
+#' 90:640-648
+#' \href{http://dx.doi.org/10.2307/2291077}{html}
+#' \href{http://www.jstor.org/stable/pdf/2291077.pdf?acceptTC=true}{pdf}
+#' (restricted access)
 #' 
-#' A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes.
-#' Testing for association between RNA-Seq
-#' and high-dimensional data. Manuscript in preparation.
-#' \link[=globalSeq]{abstract}.
+#' A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes (2016).
+#' "Testing for association between RNA-Seq and high-dimensional data",
+#' \emph{BMC Bioinformatics}. 17:118.
+#' \href{http://dx.doi.org/10.1186/s12859-016-0961-5}{html}
+#' \href{http://www.biomedcentral.com/content/pdf/s12859-016-0961-5.pdf}{pdf}
+#' (open access)
 #' 
-#' JJ Goeman, SA van de Geer, F de Kort, and HC van Houwelingen.
-#' A global test for groups of genes:
-#' testing association with a clinical outcome.
-#' Bioinformatics 2004;20:93-99.
-#' \href{http://bioinformatics.oxfordjournals.org/content/20/1/93}{full text}
+#' JJ Goeman, SA van de Geer, F de Kort, and HC van Houwelingen (2004).
+#' "A global test for groups of genes:
+#' testing association with a clinical outcome",
+#' \emph{Bioinformatics}. 20:93-99.
+#' \href{http://dx.doi.org/10.1093/bioinformatics/btg382}{html}
+#' \href{http://bioinformatics.oxfordjournals.org/content/20/1/93.full.pdf}{pdf}
+#' (open access)
 #' 
 #' @seealso
 #' 
@@ -486,15 +501,20 @@ intern.conva <- function(y, X, mu, phi, perm, offset) {
 #' 
 #' @references
 #' 
-#' A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes.
-#' Testing for association between RNA-Seq
-#' and high-dimensional data. Manuscript in preparation.
-#' \link[=globalSeq]{abstract}.
+#' A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes (2016).
+#' "Testing for association between RNA-Seq and high-dimensional data",
+#' \emph{BMC Bioinformatics}. 17:118.
+#' \href{http://dx.doi.org/10.1186/s12859-016-0961-5}{html}
+#' \href{http://www.biomedcentral.com/content/pdf/s12859-016-0961-5.pdf}{pdf}
+#' (open access)
 #' 
-#' JJ Goeman, SA van de Geer, F de Kort, and HC van Houwelingen.
-#' A global test for groups of genes:
-#' testing association with a clinical outcome.
-#' Bioinformatics 2004;20:93-99.
+#' JJ Goeman, SA van de Geer, F de Kort, and HC van Houwelingen (2004).
+#' "A global test for groups of genes:
+#' testing association with a clinical outcome",
+#' \emph{Bioinformatics}. 20:93-99.
+#' \href{http://dx.doi.org/10.1093/bioinformatics/btg382}{html}
+#' \href{http://bioinformatics.oxfordjournals.org/content/20/1/93.full.pdf}{pdf}
+#' (open access)
 #' 
 #' @seealso
 #' 
@@ -571,10 +591,13 @@ intern.cov <- function(y, X, mu, phi) {
 #' The function plots the arguments.
 #' 
 #' @references
-#' A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes.
-#' Testing for association between RNA-Seq
-#' and high-dimensional data. Manuscript in preparation.
-#' \link[=globalSeq]{abstract}.
+#' 
+#' A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes (2016).
+#' "Testing for association between RNA-Seq and high-dimensional data",
+#' \emph{BMC Bioinformatics}. 17:118.
+#' \href{http://dx.doi.org/10.1186/s12859-016-0961-5}{html}
+#' \href{http://www.biomedcentral.com/content/pdf/s12859-016-0961-5.pdf}{pdf}
+#' (open access)
 #' 
 #' @seealso
 #' This is an \code{\link{internal}} function. The user functions
@@ -661,10 +684,12 @@ intern.plot <- function(u, upper = NULL, xlab = "indices") {
 #' 
 #' @references
 #' 
-#' A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes.
-#' Testing for association between RNA-Seq
-#' and high-dimensional data. Manuscript in preparation.
-#' \link[=globalSeq]{abstract}.
+#' A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes (2016).
+#' "Testing for association between RNA-Seq and high-dimensional data",
+#' \emph{BMC Bioinformatics}. 17:118.
+#' \href{http://dx.doi.org/10.1186/s12859-016-0961-5}{html}
+#' \href{http://www.biomedcentral.com/content/pdf/s12859-016-0961-5.pdf}{pdf}
+#' (open access)
 #' 
 #' @seealso
 #' 
@@ -720,8 +745,8 @@ intern.select <- function(i, Y, Ystart, Yend, X, Xloc, window, offset,
             out <- globalSeq::omnibus(y = y, X = Xsel, offset = offset, group = group, 
                 perm = perm, phi = phi[i], kind = kind) # was phi = phi instead of phi = phi[i]
             # instead of out was temp, out <- c(temp$joint,temp$single) new
-            # names(out) <- c('joint',paste('single',
-            # 1:length(temp$single),sep='')) # new
+            # names(out) <- c('joint',paste("single",
+            # 1:length(temp$single),sep="")) # new
         }
     }
     out
@@ -866,79 +891,3 @@ intern.matrix <- function(Y){
     Y
 }
 
-
-
-# CHECKING INPUTS. DO NOT DELETE. #' Internal function #' #' This
-# function tests whether the inputs satisfy some #' formal
-# requirements. It is called by the functions #'
-# \code{\link{omnibus}} and \code{\link{proprius}}.  #' @param y #'
-# Response variable.  #' @param X #' Explanatory variables.  #' @param
-# mu #' Mean parameters.  #' @param phi #' Dispersion parameter.  #'
-# @param group #' Confounding variable.  #' @param offset #' Offset
-# values.  #' @param it #' Number of iterations.  #' @param type #'
-# Type of decomposition.  #' @keywords misc #' @export #' @examples
-# #' intern.check(y=c(1,0)) #' A Rauschenberger, MA Jonker, MA van de
-# Wiel, and RX Menezes.  #' Testing for association between RNA-Seq #'
-# and high-dimensional data. Manuscript in preparation.  #'
-# \link[=globalSeq]{abstract}..  #' \link[=globalSeq]{abstract}.
-# intern.check <- function(y,X=NULL,mu=NULL,phi=NULL,group=NULL,
-# offset=NULL,it=NULL,type=NULL){ ####################### ### default
-# values #### ####################### if(is.null(X)){X <-
-# matrix(1,nrow=length(y),ncol=100)} if(is.null(mu)){mu <-
-# rep(1,length(y))} if(is.null(phi)){phi <- 1} if(is.null(group)){group
-# <- rep(1,max(2,length(y)))} if(is.null(it)){it <- 1000}
-# if(is.null(type)){type <- 'covariates'} if(is.null(offset)){offset <-
-# rep(1,max(2,length(y)))} ######################## ### nested
-# functions ### ######################## intern.nan <- function(names){
-# n <- 0 for(i in 1:length(names)){ x <- eval(parse(text=names[i]))
-# if(any(is.na(x))){ cat(paste('Object \'',names[i],'\' must not
-# contain missing values.\n',sep='')) n <- n + 1 } } n } intern.num <-
-# function(names){ n <- 0 for(i in 1:length(names)){ x <-
-# eval(parse(text=names[i])) if(!is.numeric(x)){ cat(paste('Object
-# \'',names[i],'\' must be numeric.\n',sep='')) n <- n + 1 } } n }
-# intern.vec <- function(names){ n <- 0 for(i in 1:length(names)){ x <-
-# eval(parse(text=names[i])) if(!is.vector(x)){ if(all(is.matrix(x) |
-# is.data.frame(x)) & (ncol(x)==1 | nrow(x)==1)==FALSE){
-# cat(paste('Object \'',names[i],'\' must be a vector.\n',sep='')) n
-# <- n + 1 } } } n } intern.mat <- function(names){ n <- 0 for(i in
-# 1:length(names)){ x <- eval(parse(text=names[i])) if(!is.matrix(x) &
-# !is.data.frame(x)){ cat(paste('Object \'',names[i],'\' must be a
-# matrix.\n',sep='')) n <- n + 1 } } n } intern.len <-
-# function(ref,names){ n <- 0 for(i in 1:length(names)){ x <-
-# eval(parse(text=names[i])) if(length(x)!=ref){ cat(paste('Object
-# \'',names[i],'\' must have length ',ref,'.\n',sep='')) n <- n + 1
-# } } n } intern.ext <- function(y,X,mu,phi,group,offset,it,type){ n <-
-# 0 # response variable if(length(y) < 2){ cat('At least two samples
-# are necessary:\n') cat('Vector \'y\' must be longer than one.\n')
-# n <- n + 1 } if(any(y<0) | any(y==Inf)){ cat('Values of \'y\' are
-# outside the negative binomial support [0,Inf).\n') n <- n + 1 } #
-# covariate matrix if(class(X)=='matrix'){ if(length(y)!=nrow(X)){
-# if(length(y)==ncol(X)){ cat('Maybe you just have to transpose the
-# matrix \'X\',\n') cat('such that samples are in rows and
-# covariates in columns.\n') } cat('The length of vector \'y\' and
-# the number of rows of \'X\' must be equal.\n') n <- n + 1 } } #
-# mean if(any(mu<0) | any(mu==Inf)){ cat('Values of \'mu\' are
-# outside the parameter space [0,Inf).\n') n <- n + 1 } # dispersion
-# if(any(phi<=0) | any(phi==Inf)){ cat('Value of \'phi\' is outside
-# the parameter space (0,Inf).\n') n <- n + 1 } # confounding m <-
-# sapply(unique(group),function(x) sum(x==group)) if(min(m)<2){
-# cat('Object \'group\' must attribute at least two samples to each
-# subgroup.\n') n <- n + 1 } # offset if(any(offset<=0) |
-# any(offset==Inf)){ cat('All elements in \'group\' must be inside
-# (0,Inf).\n') } # iterations if(round(it)!=it){ cat('Object \'it\'
-# must be an integer.\n') n <- n + 1 } if(it < 2){ cat('Object
-# \'it\' must be larger than one.\n') n <- n + 1 } # decomposition
-# if(type!='samples' & type!='covariates'){ cat('Object \'type\' must
-# either be \'samples\' or \'covariates\'.\n') n <- n + 1 } n }
-# ################ ### checking ### ################ n <- 0 # number of
-# errors n <- n + intern.nan(c('y','X','mu','phi',
-# 'group','offset','it','type')) n <- n +
-# intern.num(c('y','X','mu','phi','offset','it')) n <- n +
-# intern.vec(c('y','mu','phi','group', 'offset','it','type')) n <- n +
-# intern.mat(c('X')) n <- n + intern.len(1,c('phi','it','type')) n <- n
-# + intern.len(length(y),c('mu','group','offset')) n <- n +
-# intern.ext(y=y,X=X,mu=mu,phi=phi,group=group,
-# offset=offset,it=it,type=type) if(n==0){ cat('Inputs accepted!\n') }
-# else { if(n==1){ stop('Please correct the error mentioned
-# above.',call.=FALSE) } else { stop(paste('Please correct
-# the',n,'errors mentioned above.'),call.=FALSE) } } } 

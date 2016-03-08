@@ -155,8 +155,8 @@ Because the number of covariates exceeds the sample size, classical tests cannot
 \hlkwd{omnibus}\hlstd{(y,X)}
 \end{alltt}
 \begin{verbatim}
-##   pvalue teststat
-## 1  0.025 2234.206
+##   pvalue teststat covs
+## 1  0.025 2234.206   15
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -188,8 +188,8 @@ If we account for this offset, there is no evidence for an association between t
 \hlkwd{omnibus}\hlstd{(y,X,}\hlkwc{offset}\hlstd{=offset)}
 \end{alltt}
 \begin{verbatim}
-##   pvalue  teststat
-## 1  0.967 -10693.18
+##   pvalue  teststat covs
+## 1  0.967 -10693.18   15
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -219,8 +219,8 @@ We suspect that the group membership explains some variation of the response~$\b
 \hlkwd{omnibus}\hlstd{(y,X,}\hlkwc{group}\hlstd{=group)}
 \end{alltt}
 \begin{verbatim}
-##      pvalue teststat
-## 1 0.8747475 2234.206
+##      pvalue teststat covs
+## 1 0.8714575 2234.206   15
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -238,8 +238,8 @@ Setting the dispersion parameter of the negative binomial distribution equal to 
 \hlkwd{omnibus}\hlstd{(y,X,}\hlkwc{phi}\hlstd{=}\hlnum{0}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
-##   pvalue teststat
-## 1  0.025 77991.33
+##   pvalue teststat covs
+## 1  0.025 77991.33   15
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -265,8 +265,8 @@ We are interested in testing for associations between $\boldsymbol{y}$ on one ha
 \hlkwd{omnibus}\hlstd{(y,}\hlkwd{list}\hlstd{(X1,X2))}
 \end{alltt}
 \begin{verbatim}
-##   joint teststat single.1 single.2
-## 1 0.063 2.347201    0.025    0.561
+##   joint teststat single.1 single.2 covs.1 covs.2
+## 1 0.063 2.347201    0.025    0.561     12      3
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -275,14 +275,14 @@ The output includes the \mbox{$p$-value} and the test statistic for the joint te
 \subsection{P-values}
 \label{TOA P-values}
 
-When testing single covariate sets, the user can choose between three different types of \mbox{$p$-values}. By default \mbox{$p$-values} are calculated by permutation without repetitions ($\mathrm{kind}=1$). Alternatively, permutation can be interrupted when it becomes impossible to reach a predefined significance level ($0 < \mathrm{kind} < 1$), or the method of control variates can be used ($\mathrm{kind}=0$).
+When testing single covariate sets, the user can choose between three different types of \mbox{$p$-values}. By default \mbox{$p$-values} are calculated by permutation without repetitions ($\mathrm{kind}=1$). Alternatively, permutation can be interrupted when it becomes impossible to reach a predefined significance level ($0 < \mathrm{kind} < 1$), or the method of control variables can be used ($\mathrm{kind}=0$).
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlkwd{omnibus}\hlstd{(y,X,}\hlkwc{kind}\hlstd{=}\hlnum{1}\hlstd{)} \hlcom{# crude permutation test}
 \hlkwd{omnibus}\hlstd{(y,X,}\hlkwc{kind}\hlstd{=}\hlnum{0.05}\hlstd{)} \hlcom{# interrupting permutation}
-\hlkwd{omnibus}\hlstd{(y,X,}\hlkwc{kind}\hlstd{=}\hlnum{0}\hlstd{)} \hlcom{# method of control variates}
+\hlkwd{omnibus}\hlstd{(y,X,}\hlkwc{kind}\hlstd{=}\hlnum{0}\hlstd{)} \hlcom{# method of control variables}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
@@ -462,14 +462,15 @@ For the simultaneous analysis of multiple molecular profiles, the function \text
 \hlkwd{cursus}\hlstd{(Y,Yloc,}\hlkwd{list}\hlstd{(V,W),}\hlkwd{list}\hlstd{(Vloc,Wloc),}\hlkwd{list}\hlstd{(}\hlnum{5}\hlstd{,}\hlnum{50}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
-##            joint    teststat  single.1   single.2
-## gene1 0.01666667  3.03041885 0.1333333 0.05000000
-## gene2 0.28333333  1.02593007 0.5500000 0.08333333
-## gene3 0.77500000 -1.00030785 0.7583333 0.62500000
-## gene4         NA         NaN        NA 0.27500000
-## gene5 0.54166667 -0.03586313 0.5250000 0.47500000
-## gene6 0.58333333 -0.54128922 0.8416667 0.23333333
-## gene7 0.22500000  0.82337451 0.5083333 0.17500000
+## Analysing a single chromosome.
+##            joint    teststat  single.1   single.2 covs.1 covs.2
+## gene1 0.01666667  3.03041885 0.1333333 0.05000000      2      5
+## gene2 0.28333333  1.02593007 0.5500000 0.08333333      2      8
+## gene3 0.77500000 -1.00030785 0.7583333 0.62500000      2      8
+## gene4         NA         NaN        NA 0.27500000      0      8
+## gene5 0.54166667 -0.03586313 0.5250000 0.47500000      2      8
+## gene6 0.58333333 -0.54128922 0.8416667 0.23333333      2      8
+## gene7 0.22500000  0.82337451 0.5083333 0.17500000      2      8
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -501,8 +502,8 @@ The R package \textbf{globalSeq} is based on Rauschenberger et al.~\cite{Rausche
 \newline \newline
 Based on calculations from le Cessie and van Houwelingen~\cite{leCessie1995} and using the generalised linear modelling framework from McCullagh et al.~\cite{McCullagh1989}, 
 Goeman et al.~\cite{Goeman2004} showed how to test for association between a response variable from the exponential family of distributions and a high-dimensional covariate set, and derived the contributions of samples and covariates to the test statistic.
-Menezes et al.~\cite{Menezes2015} extended this test to multiple covariate sets.
-Rauschenberger et al.~\cite{Rauschenberger2016} adapted the methods from Goeman et al.~\cite{Goeman2004} and Menezes et al.~\cite{Menezes2015} to the negative binomial distribution with an unknown dispersion parameter.
+Menezes et al.~\cite{Menezes2016} extended this test to multiple covariate sets.
+Rauschenberger et al.~\cite{Rauschenberger2016} adapted the methods from Goeman et al.~\cite{Goeman2004} and Menezes et al.~\cite{Menezes2016} to the negative binomial distribution with an unknown dispersion parameter.
 This permutation test was made computationally efficient using ideas from Wieringen et al.~\cite{Wieringen2008} and Senchaudhuri et al.~\cite{Senchaudhuri1995}.
 
 \begingroup

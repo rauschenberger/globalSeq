@@ -9,14 +9,14 @@ The proposed test can detect genetic and epigenetic alterations that affect gene
 
 **Installation**
 
-The package globalSeq depends on [R \>= 3.3](https://cran.r-project.org/), and is available from Bioconductor:
+The package globalSeq depends on [R \>= 3.3](https://cran.r-project.org/), and is available from [Bioconductor](http://bioconductor.org/packages/globalSeq/):
 
 ``` r
 source("https://bioconductor.org/biocLite.R")
 BiocInstaller::biocLite("globalSeq")
 ```
 
-Alternatively, it can be installed from [GitHub](https://github.com). This requires the package [devtools](https://cran.r-project.org/web/packages/devtools/README.html):
+Alternatively, it can be installed from [GitHub](https://github.com/Bioconductor-mirror/globalSeq). This requires the package [devtools](https://cran.r-project.org/web/packages/devtools/README.html):
 
 ``` r
 devtools::install_github("Bioconductor-mirror/globalSeq")
@@ -32,4 +32,4 @@ utils::vignette("globalSeq")
 
 **Reference**
 
-A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes. Testing for association between RNA-Seq and high-dimensional data. Manuscript in preparation.
+A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes (2016). Testing for association between RNA-Seq and high-dimensional data. BMC Bioninformatics. 17:118. [html](http://dx.doi.org/10.1186/s12859-016-0961-5) [pdf](http://www.biomedcentral.com/content/pdf/s12859-016-0961-5.pdf)

@@ -95,16 +95,20 @@
 #' 
 #' @references
 #' 
-#' A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes.
-#' Testing for association between RNA-Seq
-#' and high-dimensional data. Manuscript in preparation.
-#' \link[=globalSeq]{abstract}.
+#' A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes (2016).
+#' "Testing for association between RNA-Seq and high-dimensional data",
+#' \emph{BMC Bioinformatics}. 17:118.
+#' \href{http://dx.doi.org/10.1186/s12859-016-0961-5}{html}
+#' \href{http://www.biomedcentral.com/content/pdf/s12859-016-0961-5.pdf}{pdf}
+#' (open access)
 #' 
-#' RX Menezes, M Boetzer, M Sieswerda, GJB van Ommen, and JM Boer.
-#' Integrated analysis of DNA copy number
-#' and gene expression microarray data using gene sets.
-#' BMC Bioinformatics 2009;10:203 
-#' \href{http://www.biomedcentral.com/1471-2105/10/203/}{full text}
+#' RX Menezes, M Boetzer, M Sieswerda, GJB van Ommen, and JM Boer (2009).
+#' "Integrated analysis of DNA copy number
+#' and gene expression microarray data using gene sets",
+#' \emph{BMC Bioinformatics}. 10:203.
+#' \href{http://dx.doi.org/10.1186/1471-2105-10-203}{html}
+#' \href{http://www.biomedcentral.com/content/pdf/1471-2105-10-203.pdf}{pdf}
+#' (open access)
 #' 
 #' @seealso The function \code{\link{omnibus}} tests for associations
 #' between an overdispersed response variable
@@ -194,7 +198,7 @@ cursus <- function(Y, Yloc, X, Xloc, window, Ychr = NULL, Xchr = NULL,
             #### window=window,perm=perm,offset=offset,group=group,
             #### nodes=nodes,disp=disp,kind=kind)
         }
-        # if(class(out[[1]])=='numeric'){out <- unlist(out)}else{
+        # if(class(out[[1]])=="numeric"){out <- unlist(out)}else{
         out <- do.call(cbind, out)
         # }
     } else {
@@ -291,16 +295,28 @@ cursus <- function(Y, Yloc, X, Xloc, window, Ychr = NULL, Xchr = NULL,
 #' 
 #' @references
 #' 
-#' A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes.
-#' Testing for association between RNA-Seq
-#' and high-dimensional data. Manuscript in preparation.
-#' \link[=globalSeq]{abstract}.
+#' A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes (2016).
+#' "Testing for association between RNA-Seq and high-dimensional data",
+#' \emph{BMC Bioinformatics}. 17:118.
+#' \href{http://dx.doi.org/10.1186/s12859-016-0961-5}{html}
+#' \href{http://www.biomedcentral.com/content/pdf/s12859-016-0961-5.pdf}{pdf}
+#' (open access)
 #' 
-#' S le Cessie, and HC van Houwelingen.
-#' Testing the fit of a regression model
-#' via score tests in random effects models.
-#' Biometrics 1995;51:600-614.
-#' \href{http://www.jstor.org/stable/2532948}{full text}
+#' RX Menezes, L Mohammadi, JJ Goeman, and JM Boer (2016).
+#' "Analysing multiple types of molecular profiles simultaneously:
+#' connecting the needles in the haystack",
+#' \emph{BMC Bioinformatics}. 17:77.
+#' \href{http://dx.doi.org/10.1186/s12859-016-0926-8}{html}
+#' \href{http://www.biomedcentral.com/content/pdf/s12859-016-0926-8.pdf}{pdf}
+#' (open access)
+#' 
+#' S le Cessie, and HC van Houwelingen (1995).
+#' "Testing the fit of a regression model 
+#' via score tests in random effects models",
+#' \emph{Biometrics}. 51:600-614.
+#' \href{http://dx.doi.org/10.2307/2532948}{html}
+#' \href{http://www.jstor.org/stable/pdf/2532948.pdf?acceptTC=true}{pdf}
+#' (restricted access)
 #' 
 #' @seealso
 #' 
@@ -442,16 +458,20 @@ omnibus <- function(y, X, offset = NULL, group = NULL, mu = NULL, phi = NULL,
 #' 
 #' @references
 #' 
-#' A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes.
-#' Testing for association between RNA-Seq
-#' and high-dimensional data. Manuscript in preparation.
-#' \link[=globalSeq]{abstract}.
+#' A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes (2016).
+#' "Testing for association between RNA-Seq and high-dimensional data",
+#' \emph{BMC Bioinformatics}. 17:118.
+#' \href{http://dx.doi.org/10.1186/s12859-016-0961-5}{html}
+#' \href{http://www.biomedcentral.com/content/pdf/s12859-016-0961-5.pdf}{pdf}
+#' (open access)
 #' 
-#' JJ Goeman, SA van de Geer, F de Kort, and HC van Houwelingen.
-#' A global test for groups of genes:
-#' testing association with a clinical outcome.
-#' Bioinformatics 2004;20:93-99.
-#' \href{http://bioinformatics.oxfordjournals.org/content/20/1/93}{full text}
+#' JJ Goeman, SA van de Geer, F de Kort, and HC van Houwelingen (2004).
+#' "A global test for groups of genes:
+#' testing association with a clinical outcome",
+#' \emph{Bioinformatics}. 20:93-99.
+#' \href{http://dx.doi.org/10.1093/bioinformatics/btg382}{html}
+#' \href{http://bioinformatics.oxfordjournals.org/content/20/1/93.full.pdf}{pdf}
+#' (open access)
 #' 
 #' @seealso
 #' 
@@ -472,8 +492,8 @@ omnibus <- function(y, X, offset = NULL, group = NULL, mu = NULL, phi = NULL,
 #' X <- matrix(rnorm(n*p),nrow=n,ncol=p)
 #'
 #' # decomposition
-#' proprius(y,X,type='samples')
-#' proprius(y,X,type='covariates')
+#' proprius(y,X,type="samples")
+#' proprius(y,X,type="covariates")
 #' 
 #' @usage
 #' 

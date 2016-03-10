@@ -51,7 +51,8 @@ with the p-value in the first column,
 and the test statistic in the second column.
 }
 \description{
-Chromosome-wide analysis
+Communicates between \code{\link{cursus}} and \code{\link{omnibus}}
+by coordinating a chromosome-wide analysis.
 }
 \examples{
 # simulate high-dimensional data

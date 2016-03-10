@@ -663,8 +663,8 @@ intern.plot <- function(u, upper = NULL, xlab = "indices") {
 
 #' Internal function
 #' 
-#' Communicates between \code{\link{cursus}}
-#' and \code{\link{omnibus}}.
+#' Communicates between \code{\link{cursus}} and \code{\link{omnibus}}
+#' by selecting the covariates of interest.
 #'
 #' @export 
 #' @keywords misc
@@ -754,7 +754,8 @@ intern.select <- function(i, Y, Ystart, Yend, X, Xloc, window, offset,
 
 #' Internal function
 #' 
-#' Chromosome-wide analysis
+#' Communicates between \code{\link{cursus}} and \code{\link{omnibus}}
+#' by coordinating a chromosome-wide analysis.
 #' 
 #' @export
 #' @keywords misc

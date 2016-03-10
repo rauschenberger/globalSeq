@@ -1,7 +1,8 @@
+
+#' @title
 #' globalSeq
 #' 
 #' @description
-#' 
 #' Testing for association between
 #' RNA-Seq and high-dimensional data
 #' 
@@ -41,6 +42,6 @@
 #'
 #' @keywords documentation
 #' @docType package
-#' @name globalSeq-package
-#' @aliases globalSeq globalseq
+#' @name globalSeq
+#' @aliases globalseq
 NULL 

@@ -49,8 +49,8 @@ with the p-value in the first column,
 and the test statistic in the second column.
 }
 \description{
-Communicates between \code{\link{cursus}}
-and \code{\link{omnibus}}.
+Communicates between \code{\link{cursus}} and \code{\link{omnibus}}
+by selecting the covariates of interest.
 }
 \examples{
 # simulate high-dimensional data

@@ -1,4 +1,5 @@
 
+#' @name globalSeq
 #' @title
 #' globalSeq
 #' 
@@ -42,6 +43,6 @@
 #'
 #' @keywords documentation
 #' @docType package
-#' @name globalSeq
 #' @aliases globalseq
+#' 
 NULL 

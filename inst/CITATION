@@ -9,6 +9,7 @@ citEntry(entry="Article",
     journal = "BMC Bioinformatics",
     volume= "17:118",
     year = 2016,
+    url = "http://dx.doi.org/10.1186/s12859-016-0961-5",
     textVersion =
 		paste("Armin Rauschenberger, Marianne A. Jonker, Mark A. van de Wiel, and Renee X. Menezes (2016).",
 		"\"Testing for association between RNA-Seq and high-dimensional data\",",

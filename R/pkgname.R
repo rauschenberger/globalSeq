@@ -43,6 +43,5 @@
 #'
 #' @keywords documentation
 #' @docType package
-#' @aliases globalseq
 #' 
 NULL 

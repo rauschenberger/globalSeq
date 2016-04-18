@@ -4,7 +4,6 @@
 \name{globalSeq}
 \alias{globalSeq}
 \alias{globalSeq-package}
-\alias{globalseq}
 \title{globalSeq}
 \description{
 Testing for association between

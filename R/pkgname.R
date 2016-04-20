@@ -1,5 +1,6 @@
 
-#' @name globalSeq
+#' @name globalSeq-package
+#' @aliases globalSeq
 #' @title
 #' globalSeq
 #' 

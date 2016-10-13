@@ -1,5 +1,5 @@
 Package: globalSeq
-Version: 1.0.3
+Version: 1.1.3
 Title: Testing for association between RNA-Seq and high-dimensional data
 Description: The method may be conceptualised as a test of overall significance
     in regression analysis, where the response variable is overdispersed and the

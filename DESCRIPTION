@@ -1,11 +1,12 @@
 Package: globalSeq
-Version: 1.1.2
+Version: 1.0.3
 Title: Testing for association between RNA-Seq and high-dimensional data
 Description: The method may be conceptualised as a test of overall significance
     in regression analysis, where the response variable is overdispersed and the
     number of explanatory variables exceeds the sample size.
-biocViews: StatisticalMethod, GeneExpression, RNASeq, GenomeWideAssociation,
-    DifferentialExpression
+biocViews: GeneExpression, ExonArray, DifferentialExpression, GenomeWideAssociation,
+    Transcriptomics, DimensionReduction, Regression, Sequencing,
+    WholeGenome, RNASeq, ExomeSeq, miRNA, MultipleComparison
 Depends:
     R(>= 3.3.0)
 Suggests:

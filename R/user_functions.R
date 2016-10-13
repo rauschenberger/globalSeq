@@ -1,4 +1,5 @@
-############### Genome-wide analysis ###############
+
+############### Genome-wide analysis ###########################################
 
 #' Genome-wide analysis
 #' 
@@ -140,7 +141,7 @@
 #'           
 cursus <- function(Y, Yloc, X, Xloc, window, Ychr = NULL, Xchr = NULL, 
     offset = NULL, group = NULL, perm = 1000,
-    nodes = 2, phi = NULL, kind = 0.01) { # instead of phi = NULL was disp = TRUE
+    nodes = 2, phi = NULL, kind = 0.01) {
     Y <- globalSeq::intern.matrix(Y)
     if (is.vector(Yloc)) {
         Ystart <- Yend <- Yloc
@@ -156,7 +157,7 @@ cursus <- function(Y, Yloc, X, Xloc, window, Ychr = NULL, Xchr = NULL,
         gm <- exp(1/length(ls) * sum(log(ls)))
         offset <- ls/gm
     }
-    # #  alternative with edgeR
+    ###  alternative with edgeR
     # offset <- edgeR::calcNormFactors(Y)
     # utils::capture.output({phi <- edgeR::estimateDisp(edgeR::DGEList(counts=Y,norm.factors=offset))})
     # phi <- phi$tagwise.dispersion
@@ -173,7 +174,6 @@ cursus <- function(Y, Yloc, X, Xloc, window, Ychr = NULL, Xchr = NULL,
         cat("Analysing multiple chromosomes:\n")
         for (i in 1:length(chr)) {
             cat(paste("chromosome", chr[i],"\n"))
-            ###### START NEW ########
             if (class(X) == "list") {
                 Xpass <- lapply(1:length(X), function(j) X[[j]][Xchr[[j]] == 
                   chr[i], , drop = FALSE])
@@ -191,21 +191,12 @@ cursus <- function(Y, Yloc, X, Xloc, window, Ychr = NULL, Xchr = NULL,
                 X = Xpass, Xloc = Xlocpass, window = window, perm = perm, 
                 offset = offset, group = group, nodes = nodes, phi = phi, # was disp = disp instead of phi = phi
                 kind = kind)
-            #### END NEW ######## The following line was active !  out[[i]] <-
-            #### globalSeq::intern.chromo(Y=Y[Ychr==chr[i],,drop=FALSE],
-            #### Ystart=Ystart[Ychr==chr[i]],Yend=Yend[Ychr==chr[i]],
-            #### X=X[Xchr==chr[i],,drop=FALSE],Xloc=Xloc[Xchr==chr[i]],
-            #### window=window,perm=perm,offset=offset,group=group,
-            #### nodes=nodes,disp=disp,kind=kind)
         }
-        # if(class(out[[1]])=="numeric"){out <- unlist(out)}else{
         out <- do.call(cbind, out)
-        # }
     } else {
         ### Ambiguous arguments ###
-        stop("Please provide either\n both or none of \"Ychr\" and \"Xchr\".")
+        stop("Please provide either both or none of \"Ychr\" and \"Xchr\".")
     }
-    # everything from here is new (before only: out)
     col <- matrix(NA, nrow = ncol(out), ncol = nrow(out))
     for (i in 1:nrow(out)) {
         col[, i] <- unlist(out[i, ])
@@ -216,11 +207,7 @@ cursus <- function(Y, Yloc, X, Xloc, window, Ychr = NULL, Xchr = NULL,
 }
 
 
-
-
-
-
-############### OMNIBUS ###############
+############### OMNIBUS ########################################################
 
 #' Omnibus test
 #' 
@@ -347,7 +334,7 @@ cursus <- function(Y, Yloc, X, Xloc, window, Ychr = NULL, Xchr = NULL,
 omnibus <- function(y, X, offset = NULL, group = NULL, mu = NULL, phi = NULL, 
     perm = 1000, kind = 1) {
     ########## initialisation ##########
-    n <- length(y)  # number of samples
+    n <- length(y) # number of samples
     if (is.null(mu) | is.null(phi)) {
         est <- globalSeq::intern.estim(y = y, offset = offset)
         mu <- est$mu
@@ -410,8 +397,7 @@ omnibus <- function(y, X, offset = NULL, group = NULL, mu = NULL, phi = NULL,
 }
 
 
-
-############### PROPRIUS ###############
+############### PROPRIUS #######################################################
 
 #' Decomposition
 #' 
@@ -527,9 +513,8 @@ proprius <- function(y, X, type, offset = NULL, group = NULL, mu = NULL,
         if (length(perm) == 1) 
             {
                 perm <- globalSeq::intern.permu(n = length(y),
-                it = perm - 1, group = group, kind = Inf) # new: kind= Inf
-            }  # new
-        # perm <- globalSeq::intern.permu(length(y),1000-1,group) # old
+                it = perm - 1, group = group, kind = Inf)
+            }
         if (type == "covariates") {
             sim <- apply(perm, 2, function(perm) globalSeq::intern.cov(y = y[perm], 
                 X = X, mu = mu[perm], phi = phi))

@@ -1,13 +1,5 @@
 
-
-
-############### Documentation ################
-
-# #' @keywords documentation
-# #' @rdname globalSeq-package
-# #' @docType package
-# #' @name globalseq
-# NULL
+############### Documentation ##################################################
 
 #' Toydata
 #' 
@@ -21,11 +13,6 @@
 #' @return All entries are numeric.
 #' @format A list of numeric vectors and numeric matrices.
 NULL
-
-# \itemize{
-#   \item first example
-#   \item second example
-# }
 
 #' Internal functions
 #' 
@@ -76,13 +63,8 @@ NULL
 #' \code{\link{cursus}}, \code{\link{omnibus}} and \code{\link{proprius}}.
 NULL
 
-# at export internal <- function(){?internal} # old
 
-# globalSeq <- function(){ print(packageDescription('globalSeq'))
-# ?globalSeq }
-
-
-############### Preparation ###############
+############### Preparation ####################################################
 
 #' Internal function
 #' 
@@ -203,12 +185,11 @@ intern.permu <- function(n, it, group, kind) {
                 temp[which, -1] <- replicate(it, sample((1:n)[which]))
             }
         }
-        # unique(temp,MARGIN=2) # old
-        if(kind==0){ # new
-            cbind(temp[,1],unique(temp[,-1],MARGIN=2)) # new
-        } else { # new
-            unique(temp[,-(it+1)], MARGIN = 2) # new
-        } # new
+        if(kind==0){
+            cbind(temp[,1],unique(temp[,-1],MARGIN=2))
+        } else {
+            unique(temp[,-(it+1)], MARGIN = 2)
+        }
 }
 
 #' Internal function
@@ -263,7 +244,8 @@ intern.score <- function(y, R, mu, phi) {
         phi * mu)^2, nrow = 1) %*% matrix(diag(R), ncol = 1)
 }
 
-############### Testing ###############
+
+############### Testing ########################################################
 
 #' Internal function
 #' 
@@ -402,19 +384,18 @@ intern.focus <- function(y, X, mu, phi, perm, focus) {
         sim <- rep(NA, it)
         pos <- c(2^(0:floor(log(it, base = 2))), it + 1)
         for (j in 1:(length(pos) - 1)) {
-            if (z < target & i <= it) {
+            if (z <= target & i <= it) {
                 for (i in pos[j]:(pos[j + 1] - 1)) {
                   sim[i] <- globalSeq::intern.score(y = y[perm[, i]], R = R, mu = mu[perm[, 
                     i]], phi = phi)
                 }
                 z <- z + sum(sim[pos[j]:(pos[j + 1] - 1)] >= sim[1])
             } else {
-                z <- i  # new
+                z <- i
                 break
             }
         }
-        # pvalue <- pmin(focus,z/i) # old
-        pvalue <- z/i  # new
+        pvalue <- z/i
         teststat <- sim[1]
     }
     data.frame(pvalue = pvalue, teststat = teststat, covs=ncol(X))
@@ -426,7 +407,7 @@ intern.conva <- function(y, X, mu, phi, perm, offset) {
     if (ncol(X) == 0) {
         out <- data.frame(pvalue = NA, teststat = NA, rausch = NA, goeman = NA, 
             cor = NA, pstar = NA, covs = 0)
-    } else if (length(unique(y))<=1) { # was sum(y)==0
+    } else if (length(unique(y))<=1) {
         out <- data.frame(pvalue = 1, teststat = 0, rausch = 1, goeman = 1, 
             cor = 1, pstar = NA, covs = ncol(X))
     } else {
@@ -446,7 +427,8 @@ intern.conva <- function(y, X, mu, phi, perm, offset) {
         # p_gt <- sum(gt)/it ### original
         gt <- gt_sim[-1] >= gt_sim[1] ### unbiased
         p_gt <- sum(gt)/(it-1) ### unbiased
-        ### pstar ### pstar <- globaltest::p.value(globaltest::gt(y,~X)) # old
+        ### pstar ###
+        # pstar <- globaltest::p.value(globaltest::gt(y,~X)) ### compare
         if(!is.null(offset)){y <- offset*y}
         n <- length(y)
         mu2 <- var(y)
@@ -461,7 +443,7 @@ intern.conva <- function(y, X, mu, phi, perm, offset) {
         ### monte carlo rescue ###
         D <- nb - gt + pstar
         p <- sum(D)/it
-        if(!is.na(p)){ # new line
+        if(!is.na(p)){
             if (p < 0 | p > 1) {
                 if (p < 0) {
                     p <- 0
@@ -470,20 +452,17 @@ intern.conva <- function(y, X, mu, phi, perm, offset) {
                     p <- 1
                 }
             }
-        } # new line
+        }
         cor <- cor(nb, gt)
         out <- data.frame(pvalue = p, teststat = nb_sim[1], covs = ncol(X),
                           rausch = p_nb, goeman = p_gt, cor = round(cor, 2),
                           pstar = pstar)
-        #SE_pvalue = sqrt(sum((D - p)^2)/(it - 1))
-        #SE_rausch = sqrt(p_nb * (1 - p_nb)/it)
-        #SE_goeman = sqrt(p_gt * (1 - p_gt)/it)
     }
     out
 }
 
 
-############### Decomposition ###############
+############### Decomposition ##################################################
 
 #' Internal function
 #' 
@@ -540,7 +519,7 @@ intern.conva <- function(y, X, mu, phi, perm, offset) {
 #' intern.cov(y,X,mu,phi)
 #' 
 intern.sam <- function(y, X, mu, phi) {
-    n <- nrow(X)  # number of samples
+    n <- nrow(X) # number of samples
     R <- X %*% t(X)/ncol(X)
     u <- rep(NA, n)
     for (i in 1:n) {
@@ -555,7 +534,7 @@ intern.sam <- function(y, X, mu, phi) {
 #' @keywords misc
 #' @rdname intern.sam
 intern.cov <- function(y, X, mu, phi) {
-    p <- ncol(X)  # number of covariates
+    p <- ncol(X) # number of covariates
     u <- rep(NA, p)
     for (i in 1:p) {
         R <- 1/p * matrix(X[, i], ncol = 1) %*% matrix(X[, i], nrow = 1)
@@ -619,7 +598,6 @@ intern.plot <- function(u, upper = NULL, xlab = "indices") {
     lwd <- max(lwd, 0.1)
     lwd <- min(lwd, 5)
     n <- length(u)
-    # min <- floor(min(u,upper)) max <- ceiling(max(u,upper))
     min <- min(u, upper)
     max <- max(u, upper)
     if (is.null(upper)) {
@@ -659,7 +637,7 @@ intern.plot <- function(u, upper = NULL, xlab = "indices") {
 }
 
 
-############### Communication ###############
+############### Communication ##################################################
 
 #' Internal function
 #' 
@@ -743,10 +721,7 @@ intern.select <- function(i, Y, Ystart, Yend, X, Xloc, window, offset,
             NA
         } else {
             out <- globalSeq::omnibus(y = y, X = Xsel, offset = offset, group = group, 
-                perm = perm, phi = phi[i], kind = kind) # was phi = phi instead of phi = phi[i]
-            # instead of out was temp, out <- c(temp$joint,temp$single) new
-            # names(out) <- c('joint',paste("single",
-            # 1:length(temp$single),sep="")) # new
+                perm = perm, phi = phi[i], kind = kind)
         }
     }
     out
@@ -813,13 +788,8 @@ intern.select <- function(i, Y, Ystart, Yend, X, Xloc, window, offset,
 #'              nodes, phi, kind) 
 #' 
 intern.chromo <- function(Y, Ystart, Yend, X, Xloc, window, offset, group, 
-    perm, nodes, phi, kind) { # was disp instead of phi
+    perm, nodes, phi, kind) {
     Y <- globalSeq::intern.matrix(Y)
-   # if (disp == FALSE) { # was active
-   #     phi <- 0 # was active
-   # } else { # was active
-   #     phi <- NULL # was active
-   # } # was active
     if (nodes == 1) {
         out <- sapply(1:nrow(Y), function(i) globalSeq::intern.select(i = i, Y = Y, 
             Ystart = Ystart, Yend = Yend, X = X, Xloc = Xloc, window = window, 
@@ -827,9 +797,8 @@ intern.chromo <- function(Y, Ystart, Yend, X, Xloc, window, offset, group,
             perm = perm, phi = phi, kind = kind))
     } else {
         cluster <- parallel::makeCluster(nodes)
-        intern.select <- globalSeq::intern.select # new
-        parallel::clusterExport(cluster, "intern.select",envir=environment()) # new
-        # parallel::clusterExport(cluster, "intern.select") # old
+        intern.select <- globalSeq::intern.select
+        parallel::clusterExport(cluster, "intern.select",envir=environment())
         parallel::clusterExport(cluster, c("Ystart", "Y", "Yend", "X", 
             "Xloc", "window", "offset", "group", "perm", "phi", "kind"), 
             envir = environment())
@@ -883,12 +852,11 @@ intern.matrix <- function(Y){
             } else {
                Y <- SummarizedExperiment::assays(Y)$counts 
             }
-        #} else if(class(Y)=="DGEList"){
+        #} else if(class(Y)=="DGEList"){ ### DGEList
         #    Y <- Y$counts
-        #} else if(class(Y)=="data.frame"){
+        #} else if(class(Y)=="data.frame"){ ### data.frame
         #    Y <- as.matrix(Y)
         }
     }
     Y
 }
-

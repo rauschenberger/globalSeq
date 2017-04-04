@@ -7,7 +7,7 @@
 #' the examples shown in the vignette.
 #' 
 #' @docType data
-#' @keywords datasets
+#' @keywords internal
 #' @name toydata
 #' @usage data(toydata)
 #' @return All entries are numeric.
@@ -57,7 +57,7 @@ NULL
 #' transforms data to a numeric matrix.
 #' 
 #' @name internal
-#' @keywords documentation
+#' @keywords internal
 #' @seealso
 #' The user functions of the R package \code{\link{globalSeq}} are
 #' \code{\link{cursus}}, \code{\link{omnibus}} and \code{\link{proprius}}.
@@ -73,7 +73,7 @@ NULL
 #' \code{\link{omnibus}} and \code{\link{proprius}}.
 #' 
 #' @export
-#' @keywords misc
+#' @keywords internal
 #' 
 #' @inheritParams omnibus
 #' 
@@ -137,7 +137,7 @@ intern.estim <- function(y, offset = NULL) {
 #' and \code{\link{proprius}}.
 #' 
 #' @export
-#' @keywords misc
+#' @keywords internal
 #' 
 #' @inheritParams omnibus
 #' @param n
@@ -198,7 +198,7 @@ intern.permu <- function(n, it, group, kind) {
 #' It is called by the function \code{\link{omnibus}}.
 #' 
 #' @export
-#' @keywords misc
+#' @keywords internal
 #' 
 #' @inheritParams omnibus
 #' 
@@ -259,7 +259,7 @@ intern.score <- function(y, R, mu, phi) {
 #' to increase precision and decrease computational expense.
 #' 
 #' @export
-#' @keywords misc
+#' @keywords internal
 #' 
 #' @inheritParams omnibus
 #' 
@@ -331,7 +331,6 @@ intern.score <- function(y, R, mu, phi) {
 #' \code{\link{omnibus}}, and \code{\link{proprius}}.
 #' 
 #' @examples
-#' 
 #' # simulate high-dimensional data
 #' n <- 30
 #' p <- 100
@@ -366,7 +365,7 @@ intern.crude <- function(y, X, mu, phi, perm) {
     data.frame(pvalue = pvalue, teststat = teststat, covs=ncol(X))
 }
 #' @export
-#' @keywords misc
+#' @keywords internal
 #' @rdname intern.crude
 intern.focus <- function(y, X, mu, phi, perm, focus) {
     if (ncol(X) == 0) {
@@ -378,7 +377,7 @@ intern.focus <- function(y, X, mu, phi, perm, focus) {
     } else {
         R <- X %*% t(X)/ncol(X)
         it <- ncol(perm)
-        target <- focus * it
+        target <- ceiling(focus * it)
         i <- -Inf
         z <- 0
         sim <- rep(NA, it)
@@ -401,7 +400,7 @@ intern.focus <- function(y, X, mu, phi, perm, focus) {
     data.frame(pvalue = pvalue, teststat = teststat, covs=ncol(X))
 }
 #' @export
-#' @keywords misc
+#' @keywords internal
 #' @rdname intern.crude
 intern.conva <- function(y, X, mu, phi, perm, offset) {
     if (ncol(X) == 0) {
@@ -471,7 +470,7 @@ intern.conva <- function(y, X, mu, phi, perm, offset) {
 #' They are called by the function \code{\link{proprius}}.
 #' 
 #' @export
-#' @keywords misc
+#' @keywords internal
 #' 
 #' @inheritParams intern.crude
 #' 
@@ -502,7 +501,6 @@ intern.conva <- function(y, X, mu, phi, perm, offset) {
 #' \code{\link{omnibus}}, and \code{\link{proprius}}.
 #' 
 #' @examples
-#' 
 #' # simulate high-dimensional data
 #' n <- 30
 #' p <- 100
@@ -531,7 +529,7 @@ intern.sam <- function(y, X, mu, phi) {
     u
 }
 #' @export
-#' @keywords misc
+#' @keywords internal
 #' @rdname intern.sam
 intern.cov <- function(y, X, mu, phi) {
     p <- ncol(X) # number of covariates
@@ -554,7 +552,7 @@ intern.cov <- function(y, X, mu, phi) {
 #' It is called by the function \code{\link{proprius}}.
 #' 
 #' @export
-#' @keywords misc
+#' @keywords internal
 #' 
 #' @param u
 #' influence:
@@ -584,7 +582,6 @@ intern.cov <- function(y, X, mu, phi) {
 #' and \code{\link{proprius}}.
 #' 
 #' @examples
-#' 
 #' # simulate influences
 #' set.seed(1)
 #' u <- rchisq(n=100,df=2)
@@ -645,7 +642,7 @@ intern.plot <- function(u, upper = NULL, xlab = "indices") {
 #' by selecting the covariates of interest.
 #'
 #' @export 
-#' @keywords misc
+#' @keywords internal
 #' 
 #' @inheritParams intern.chromo
 #' @inheritParams cursus
@@ -733,7 +730,7 @@ intern.select <- function(i, Y, Ystart, Yend, X, Xloc, window, offset,
 #' by coordinating a chromosome-wide analysis.
 #' 
 #' @export
-#' @keywords misc
+#' @keywords internal
 #' 
 #' @inheritParams cursus
 #' @inheritParams omnibus
@@ -818,7 +815,7 @@ intern.chromo <- function(Y, Ystart, Yend, X, Xloc, window, offset, group,
 #' Convert RNA-Seq data to a numeric matrix
 #' 
 #' @export
-#' @keywords misc
+#' @keywords internal
 #' 
 #' @inheritParams intern.chromo
 #' 

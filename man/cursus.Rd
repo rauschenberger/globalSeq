@@ -148,4 +148,3 @@ All other function of the R package
 \code{\link{globalSeq}} are \code{\link{internal}}.
 }
 \keyword{methods}
-

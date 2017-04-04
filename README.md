@@ -1,4 +1,6 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+[![Build Status](https://travis-ci.org/rauschenberger/globalSeq.svg?branch=master)](https://travis-ci.org/rauschenberger/globalSeq) [![Coverage Status](https://codecov.io/github/rauschenberger/globalSeq/coverage.svg?branch=master)](https://codecov.io/github/rauschenberger/globalSeq?branch=master) [![Platforms](http://www.bioconductor.org/shields/availability/release/globalSeq.svg)](http://bioconductor.org/packages/devel/bioc/html/globalSeq.html#archives) [![Downloads](http://www.bioconductor.org/shields/downloads/globalSeq.svg)](http://bioconductor.org/packages/stats/bioc/globalSeq/) [![Posts](http://www.bioconductor.org/shields/posts/globalSeq.svg)](https://support.bioconductor.org/t/globalseq/) [![in Bioc](http://www.bioconductor.org/shields/years-in-bioc/globalSeq.svg)](http://bioconductor.org/packages/devel/bioc/html/globalSeq.html#since) [![Build](http://www.bioconductor.org/shields/build/devel/bioc/globalSeq.svg)](http://bioconductor.org/checkResults/devel/bioc-LATEST/globalSeq/) [![Commits](http://www.bioconductor.org/shields/commits/bioc/globalSeq.svg)](http://bioconductor.org/packages/devel/bioc/html/globalSeq.html#svn_source) [![Coverage Status](http://www.bioconductor.org/shields/coverage/devel/globalSeq.svg)](https://codecov.io/github/Bioconductor-mirror/globalSeq/branch/master)
+
 **Scope**
 
 Testing for association between RNA-Seq and other genomic data is challenging due to high variability of the former and high dimensionality of the latter.
@@ -9,7 +11,7 @@ The proposed test can detect genetic and epigenetic alterations that affect gene
 
 **Installation**
 
-The package globalSeq depends on [R \>= 3.3](https://cran.r-project.org/), and is available from [Bioconductor](http://bioconductor.org/packages/globalSeq/):
+The package globalSeq depends on [R &gt;= 3.3.0](https://cran.r-project.org/), and is available from [Bioconductor](http://bioconductor.org/packages/globalSeq/):
 
 ``` r
 source("https://bioconductor.org/biocLite.R")
@@ -19,7 +21,8 @@ BiocInstaller::biocLite("globalSeq")
 Alternatively, it can be installed from [GitHub](https://github.com/Bioconductor-mirror/globalSeq). This requires the package [devtools](https://cran.r-project.org/web/packages/devtools/README.html):
 
 ``` r
-devtools::install_github("Bioconductor-mirror/globalSeq")
+devtools::install_github("rauschenberger/globalSeq",build_vignettes=TRUE)
+devtools::install_github("Bioconductor-mirror/globalSeq",build_vignettes=TRUE)
 ```
 
 Please restart R before loading the package and its documentation:
@@ -32,4 +35,4 @@ utils::vignette("globalSeq")
 
 **Reference**
 
-A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes (2016). Testing for association between RNA-Seq and high-dimensional data. BMC Bioninformatics. 17:118. [html](http://dx.doi.org/10.1186/s12859-016-0961-5) [pdf](http://www.biomedcentral.com/content/pdf/s12859-016-0961-5.pdf)
+A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes (2016). Testing for association between RNA-Seq and high-dimensional data. BMC Bioinformatics. 17:118. [html](http://dx.doi.org/10.1186/s12859-016-0961-5) [pdf](http://www.biomedcentral.com/content/pdf/s12859-016-0961-5.pdf)

@@ -47,5 +47,4 @@ transforms data to a numeric matrix.
 The user functions of the R package \code{\link{globalSeq}} are
 \code{\link{cursus}}, \code{\link{omnibus}} and \code{\link{proprius}}.
 }
-\keyword{documentation}
-
+\keyword{internal}

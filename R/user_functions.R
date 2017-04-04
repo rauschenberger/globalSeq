@@ -163,7 +163,7 @@ cursus <- function(Y, Yloc, X, Xloc, window, Ychr = NULL, Xchr = NULL,
     # phi <- phi$tagwise.dispersion
     if (is.null(Ychr) | is.null(Xchr)) {
         ########## Analysing a single chromosome ##########
-        cat("Analysing a single chromosome.\n")
+        message("Analysing a single chromosome.")
         out <- globalSeq::intern.chromo(Y = Y, Ystart = Ystart, Yend = Yend, X = X, 
             Xloc = Xloc, window = window, offset = offset, group = group, 
             perm = perm, nodes = nodes, phi = phi, kind = kind) # was disp = disp instead of phi = phi
@@ -171,9 +171,9 @@ cursus <- function(Y, Yloc, X, Xloc, window, Ychr = NULL, Xchr = NULL,
         ########## Analysing multiple chromosomes ##########
         out <- list()
         chr <- unique(Ychr)
-        cat("Analysing multiple chromosomes:\n")
+        message("Analysing multiple chromosomes:")
         for (i in 1:length(chr)) {
-            cat(paste("chromosome", chr[i],"\n"))
+            message(paste("chromosome", chr[i],"\n"))
             if (class(X) == "list") {
                 Xpass <- lapply(1:length(X), function(j) X[[j]][Xchr[[j]] == 
                   chr[i], , drop = FALSE])
@@ -317,7 +317,6 @@ cursus <- function(Y, Yloc, X, Xloc, window, Ychr = NULL, Xchr = NULL,
 #' are \code{\link{internal}}.
 #' 
 #' @examples
-#' 
 #' # simulate high-dimensional data
 #' n <- 30; p <- 100
 #' y <- rnbinom(n,mu=10,size=1/0.25)
@@ -371,7 +370,7 @@ omnibus <- function(y, X, offset = NULL, group = NULL, mu = NULL, phi = NULL,
         sets <- X
         k <- length(sets)  # number of sets
         # # # # # # # # # # # separate testing # # # # # # # # # # #
-        single <- covs <- rep(NA, times = k)  # single p-values                        # new: covs <- 
+        single <- covs <- rep(NA, times = k)  # single p-values
         sim <- matrix(NA, nrow = k, ncol = it)  # simulated test statistics
         for (i in 1:k) {
             X <- sets[[i]]
@@ -379,7 +378,7 @@ omnibus <- function(y, X, offset = NULL, group = NULL, mu = NULL, phi = NULL,
             temp <- apply(perm, 2, function(perm) globalSeq::intern.score(y = y[perm], 
                 R = R, mu = mu[perm], phi = phi))
             single[i] <- sum(temp >= temp[1])/it  # single p-values
-            covs[i] <- ncol(X)                                                         # new
+            covs[i] <- ncol(X)
             sim[i, ] <- temp
         }
         # # # # # # # # # joint testing # # # # # # # # #
@@ -471,7 +470,6 @@ omnibus <- function(y, X, offset = NULL, group = NULL, mu = NULL, phi = NULL,
 #' are \code{\link{internal}}.
 #' 
 #' @examples
-#' 
 #' # simulate high-dimensional data
 #' n <- 30; p <- 100
 #' y <- rnbinom(n,mu=10,size=1/0.25)
@@ -482,7 +480,6 @@ omnibus <- function(y, X, offset = NULL, group = NULL, mu = NULL, phi = NULL,
 #' proprius(y,X,type="covariates")
 #' 
 #' @usage
-#' 
 #' proprius(y, X, type, offset = NULL, group = NULL,
 #'         mu = NULL, phi = NULL,
 #'         alpha = NULL, perm = 1000, plot = TRUE)

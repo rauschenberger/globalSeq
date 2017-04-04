@@ -32,5 +32,4 @@ colnames(Y) <- paste("cell",1:ncol(Y),sep="")
 # all.equal(Y,intern.matrix(Z))
 
 }
-\keyword{misc}
-
+\keyword{internal}

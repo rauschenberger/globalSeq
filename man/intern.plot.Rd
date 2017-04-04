@@ -25,7 +25,6 @@ to the test statistic.
 It is called by the function \code{\link{proprius}}.
 }
 \examples{
-
 # simulate influences
 set.seed(1)
 u <- rchisq(n=100,df=2)
@@ -48,5 +47,4 @@ This is an \code{\link{internal}} function. The user functions
 are \code{\link{cursus}}, \code{\link{omnibus}},
 and \code{\link{proprius}}.
 }
-\keyword{misc}
-
+\keyword{internal}

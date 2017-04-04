@@ -82,5 +82,4 @@ This is an \code{\link{internal}} function. The user functions
 are \code{\link{cursus}}, \code{\link{omnibus}},
 and \code{\link{proprius}}.
 }
-\keyword{misc}
-
+\keyword{internal}

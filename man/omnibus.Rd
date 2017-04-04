@@ -74,7 +74,6 @@ and permutation in chunks (0 < \code{kind} < 1)
 \link[=intern.crude]{details}.
 }
 \examples{
-
 # simulate high-dimensional data
 n <- 30; p <- 100
 y <- rnbinom(n,mu=10,size=1/0.25)
@@ -119,4 +118,3 @@ All other functions of the R package \code{\link{globalSeq}}
 are \code{\link{internal}}.
 }
 \keyword{methods}
-

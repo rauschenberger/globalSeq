@@ -2,8 +2,8 @@
 % Please edit documentation in R/pkgname.R
 \docType{package}
 \name{globalSeq-package}
-\alias{globalSeq}
 \alias{globalSeq-package}
+\alias{globalSeq}
 \title{Negative binomial global test}
 \description{
 Testing for association between RNA-Seq
@@ -44,5 +44,5 @@ A Rauschenberger, MA Jonker, MA van de Wiel, and RX Menezes (2016).
 
 \email{a.rauschenberger@vumc.nl}
 }
-\keyword{documentation}
 
+\keyword{documentation}

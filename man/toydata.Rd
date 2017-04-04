@@ -15,5 +15,4 @@ All entries are numeric.
 This dataset allows to reproduce
 the examples shown in the vignette.
 }
-\keyword{datasets}
-
+\keyword{internal}

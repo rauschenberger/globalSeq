@@ -71,5 +71,4 @@ window <- 1
 cursus(Y,Yloc,X,Xloc,window)
 
 }
-\keyword{misc}
-
+\keyword{internal}

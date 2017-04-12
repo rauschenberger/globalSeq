@@ -1,0 +1,47 @@
+template:
+  params:
+    bootswatch: spacelab
+    ganalytics: UA-96845398-2
+
+home:
+   links:
+   - text: "Download package"
+     href: http://bioconductor.org/packages/globalSeq/
+
+navbar:
+  title: "globalSeq"
+  left:
+    - text: "functions"
+      href: reference/index.html
+    - text: "vignette"
+      href: articles/vignette.html
+    - text: "article"
+      href: articles/article.html
+    - text: "news"
+      href:  news/index.html
+  right:
+    - icon: fa-github
+      href: https://github.com/rauschenberger/globalSeq
+    - icon: fa-download
+      href: http://bioconductor.org/packages/globalSeq/
+
+reference:
+  - title: "User functions"
+    contents: 
+      - omnibus
+      - proprius
+      - cursus
+  - title: "Internal functions"
+    contents:
+      - intern.estim
+      - intern.permu
+      - intern.score
+      - intern.crude
+      - intern.focus
+      - intern.conva
+      - intern.cov
+      - intern.sam
+      - intern.plot
+      - intern.chromo
+      - intern.select
+      - intern.matrix

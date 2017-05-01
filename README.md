@@ -21,7 +21,7 @@ The proposed test can detect genetic and epigenetic alterations that affect gene
 Installation
 ------------
 
-The package globalSeq depends on [R &gt;= 3.3.0](https://cran.r-project.org/), and is available from [Bioconductor](http://bioconductor.org/packages/globalSeq/):
+The package globalSeq depends on [R &gt;= 3.0.0](https://cran.r-project.org/), and is available from [Bioconductor](http://bioconductor.org/packages/globalSeq/):
 
 ``` r
 source("https://bioconductor.org/biocLite.R")

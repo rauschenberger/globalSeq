@@ -32,7 +32,6 @@ Alternatively, it can be installed from [GitHub](https://github.com/rauschenberg
 
 ``` r
 devtools::install_github("rauschenberger/globalSeq",build_vignettes=TRUE)
-devtools::install_github("Bioconductor-mirror/globalSeq",build_vignettes=TRUE)
 ```
 
 Please restart R before loading the package and its documentation:

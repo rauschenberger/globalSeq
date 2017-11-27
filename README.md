@@ -4,6 +4,12 @@
 
 **This package is under development.**
 
+Install [palasso](https://github.com/rauschenberger/palasso) using [devtools](https://cran.r-project.org/web/packages/devtools/README.html):
+
+``` r
+devtools::install_github("rauschenberger/semisup",build_vignettes=TRUE)
+```
+
 <!-- [html]
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

@@ -1,4 +1,6 @@
 
+<!-- Only modify this file in folder "vignettes"! -->
+
 ---
 output: rmarkdown::html_vignette
 vignette: >

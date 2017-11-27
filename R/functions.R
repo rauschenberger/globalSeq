@@ -154,7 +154,7 @@ palasso <- function(y,X,oser=FALSE,trial=FALSE,...){
 #' Weight scales
 #' 
 #' @export
-#' @keywords methods
+#' @keywords internal
 #' 
 #' @description
 #' The function \code{scales} plots weights.

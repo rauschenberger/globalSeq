@@ -30,4 +30,4 @@ x <- runif(10)
 scales(x)
 
 }
-\keyword{methods}
+\keyword{internal}

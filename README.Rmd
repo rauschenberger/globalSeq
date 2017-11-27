@@ -16,7 +16,6 @@ knitr::opts_chunk$set(
 [![Build Status](https://travis-ci.org/rauschenberger/globalSeq.svg?branch=master)](https://travis-ci.org/rauschenberger/globalSeq)
 [![Coverage Status](https://codecov.io/github/rauschenberger/globalSeq/coverage.svg?branch=master)](https://codecov.io/github/rauschenberger/globalSeq?branch=master)
 
-
 <!--[![Platforms](http://www.bioconductor.org/shields/availability/release/globalSeq.svg)](http://bioconductor.org/packages/devel/bioc/html/globalSeq.html#archives)
 [![Downloads](http://www.bioconductor.org/shields/downloads/globalSeq.svg)](http://bioconductor.org/packages/stats/bioc/globalSeq/)
 [![Posts](http://www.bioconductor.org/shields/posts/globalSeq.svg)](https://support.bioconductor.org/t/globalseq/)

@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 template:
   params:
     bootswatch: spacelab
@@ -46,39 +46,3 @@ reference:
       - intern.chromo
       - intern.select
       - intern.matrix
-=======
-template:
-  params:
-    bootswatch: spacelab
-    ganalytics: UA-96845398-3
-
-home:
-   links:
-   - text: "Download package"
-     href: http://bioconductor.org/packages/palasso/
-
-navbar:
-  title: "palasso"
-  left:
-    - text: "functions"
-      href: reference/index.html
-    - text: "vignette"
-      href: articles/vignette.html
-    - text: "article"
-      href: articles/article.html
-    - text: "news"
-      href:  news/index.html
-  right:
-    - icon: fa-github
-      href: https://github.com/rauschenberger/palasso
-    - icon: fa-download
-      href: http://bioconductor.org/packages/palasso/
-
-reference:
-  - title: "User functions"
-    contents:
-      - palasso
-  - title: "Internal functions"
-    contents:
-      - balance
->>>>>>> 3cc62c41f6f331b1b264a04b0672c6b986eeac23

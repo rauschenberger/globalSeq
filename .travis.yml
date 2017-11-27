@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
 language: R
@@ -15,21 +15,3 @@ r_packages:
 
 after_success:
   - Rscript -e 'library(covr); codecov()'
-=======
-# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
-
-language: R
-sudo: false
-cache: packages
-use_bioc: true
-bioc_required: true
-
-r:
-  - devel
-
-r_packages:
-  - covr
-
-after_success:
-  - Rscript -e 'library(covr); codecov()'
->>>>>>> 3cc62c41f6f331b1b264a04b0672c6b986eeac23

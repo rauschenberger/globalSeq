@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 citHeader("The R package globalSeq is based on the following article:")
 
 citEntry(entry="Article",
@@ -15,16 +14,4 @@ citEntry(entry="Article",
 		paste("Armin Rauschenberger, Marianne A. Jonker, Mark A. van de Wiel, and Renee X. Menezes (2016).",
 		"\"Testing for association between RNA-Seq and high-dimensional data\",",
         	"BMC Bioinformatics, 17:118.")
-=======
-citHeader("The R package palasso is based on the following article:")
-
-citEntry(entry="Article",
-    title = "XXX",
-    author = personList(as.person("XXX XXX")),
-    journal = "Manuscript in preparation",
-    volume= "0:0",
-    year = 2018,
-    url = "http://dx.doi.org/",
-    textVersion = paste("XXX.")
->>>>>>> 3cc62c41f6f331b1b264a04b0672c6b986eeac23
 )

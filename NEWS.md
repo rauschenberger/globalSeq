@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## globalSeq 1.6.0 (2017-10-31)
 
 * Minor improvements
@@ -14,4 +15,10 @@
 
 * Added functions
 * Added help pages
+=======
+## palasso 0.0.0 (2018-01-01)
+
+* Added functions
+* Added help pages
+>>>>>>> 3cc62c41f6f331b1b264a04b0672c6b986eeac23
 * Added vignette

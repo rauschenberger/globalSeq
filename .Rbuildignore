@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 ^Readme\.rmd$
 ^\.travis\.yml$
 ^_pkgdown\.yml$
 ^docs$
+=======
+^Readme\.rmd$
+^\.travis\.yml$
+^_pkgdown\.yml$
+^docs$
+>>>>>>> 3cc62c41f6f331b1b264a04b0672c6b986eeac23

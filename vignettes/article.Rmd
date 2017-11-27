@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 ---
 output: rmarkdown::html_vignette
@@ -12,4 +13,17 @@ vignette: >
   <p>Download article <a href="https://www.biomedcentral.com/content/pdf/s12859-016-0961-5.pdf">here</a>.</p>
  </object>
  </div>
+=======
+
+---
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{pkgdown}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+<!--html_preserve-->
+not yet available
+>>>>>>> 3cc62c41f6f331b1b264a04b0672c6b986eeac23
 <!--/html_preserve-->

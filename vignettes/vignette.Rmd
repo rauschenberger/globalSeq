@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 ---
 output: rmarkdown::html_vignette
@@ -13,3 +14,17 @@ vignette: >
  </object>
  </div>
 <!--/html_preserve-->
+=======
+
+---
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{pkgdown}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+<!--html_preserve-->
+not yet available
+<!--/html_preserve-->
+>>>>>>> 3cc62c41f6f331b1b264a04b0672c6b986eeac23

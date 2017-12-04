@@ -1,1 +1,5 @@
+^Readme\.rmd$
+^\.travis\.yml$
 ^_pkgdown\.yml$
+^toydata\.R$
+^docs$

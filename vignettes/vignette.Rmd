@@ -11,7 +11,7 @@ vignette: >
 
 <!--html_preserve-->
 <object data="https://bioconductor.org/packages/devel/bioc/vignettes/globalSeq/inst/doc/globalSeq.pdf" type="application/pdf" width="900px" height="700px"> 
-  <p>Download vignette <a href="https://bioconductor.org/packages/devel/bioc/vignettes/globalSeq/inst/doc/globalSeq.pdf">here</a>.</p>  
+  <p>Please unblock content, or download vignette <a href="https://bioconductor.org/packages/devel/bioc/vignettes/globalSeq/inst/doc/globalSeq.pdf">here</a>.</p>  
  </object>
  </div>
 <!--/html_preserve-->

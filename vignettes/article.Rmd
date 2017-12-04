@@ -11,7 +11,7 @@ vignette: >
 
 <!--html_preserve-->
 <object data="https://www.biomedcentral.com/content/pdf/s12859-016-0961-5.pdf" type="application/pdf" width="900px" height="700px"> 
-  <p>Download article <a href="https://www.biomedcentral.com/content/pdf/s12859-016-0961-5.pdf">here</a>.</p>
+  <p>Please unblock content, or download article <a href="https://www.biomedcentral.com/content/pdf/s12859-016-0961-5.pdf">here</a>.</p>
  </object>
  </div>
 <!--/html_preserve-->

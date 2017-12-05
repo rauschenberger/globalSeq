@@ -278,7 +278,7 @@ This permutation test was made computationally efficient using ideas from Wierin
 
 \begingroup
 \renewcommand{\section}[2]{}
-\bibliography{globalSeq}
+\bibliography{references}
 \endgroup
 
 \end{document}

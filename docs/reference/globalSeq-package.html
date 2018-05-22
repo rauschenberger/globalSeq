@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Negative binomial global test � globalSeq-package • globalSeq</title>
+<title>Negative binomial global test — globalSeq-package • globalSeq</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -18,13 +18,33 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Negative binomial global test — globalSeq-package" />
+
+<meta property="og:description" content="Testing for association between RNA-Seq
+and other genomic data is challenging
+due to high variability of the former
+and high dimensionality of the latter.
+Using the negative binomial distribution and a random effects model,
+we developed an omnibus test that overcomes both difficulties.
+It may be conceptualised as a test of overall significance
+in regression analysis, where the response variable is overdispersed
+and the number of explanatory variables exceeds the sample size.
+The proposed method can detect genetic and epigenetic alterations
+that affect gene expression. It can examine complex regulatory
+mechanisms of gene expression." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -33,18 +53,6 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
-
-<!-- Google analytics -->
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-96845398-2', 'auto');
-  ga('send', 'pageview');
-
-</script>
 
   </head>
 
@@ -59,8 +67,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">globalSeq</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">globalSeq</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.9.1</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -91,6 +103,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -98,12 +111,15 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Negative binomial global test</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rauschenberger/globalSeq/blob/master/R/pkgname.R'><code>R/pkgname.R</code></a></small>
+    <div class="hidden name"><code>globalSeq-package.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Testing for association between RNA-Seq
 and other genomic data is challenging
@@ -118,15 +134,16 @@ and the number of explanatory variables exceeds the sample size.</p>
 that affect gene expression. It can examine complex regulatory
 mechanisms of gene expression.</p>
     
+    </div>
 
         
     <h2 class="hasAnchor" id="getting-started"><a class="anchor" href="#getting-started"></a>Getting started</h2>
 
     
-    <p><code><a href='omnibus.html'>omnibus</a></code> tests entire covariate sets 
-<code><a href='proprius.html'>proprius</a></code> shows individual contributions 
-<code><a href='cursus.html'>cursus</a></code> analyses the whole genome</p>
-<p>The following command opens the vignette: 
+    <p><code><a href='omnibus.html'>omnibus</a></code> tests entire covariate sets <br />
+<code><a href='proprius.html'>proprius</a></code> shows individual contributions <br />
+<code><a href='cursus.html'>cursus</a></code> analyses the whole genome <br /></p>
+<p>The following command opens the vignette: <br />
 <code>utils::vignette("globalSeq")</code></p>
     
     <h2 class="hasAnchor" id="more-information"><a class="anchor" href="#more-information"></a>More information</h2>
@@ -137,8 +154,8 @@ mechanisms of gene expression.</p>
 <em>BMC Bioinformatics</em>. 17:118.
 <a href='http://dx.doi.org/10.1186/s12859-016-0961-5'>html</a>
 <a href='http://www.biomedcentral.com/content/pdf/s12859-016-0961-5.pdf'>pdf</a>
-(open access)
-    <a href='mailto:a.rauschenberger@vumc.nl'>a.rauschenberger@vumc.nl</a></p>
+(open access) <br /></p>
+<p><a href='mailto:a.rauschenberger@vumc.nl'>a.rauschenberger@vumc.nl</a></p>
     
 
   </div>
@@ -160,11 +177,14 @@ mechanisms of gene expression.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

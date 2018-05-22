@@ -14,7 +14,7 @@
 \begin{document}
 \maketitle
 
-This vignette explains how to use the R~package \textbf{globalSeq}. The function \hyperref[omnibus]{\mbox{omnibus}} tests  for associations between an overdispersed count variable and a high-dimensional covariate set. The function \hyperref[proprius]{\mbox{proprius}} decomposes the test statistic to show the contributions of individual samples or covariates. And the function \hyperref[cursus]{\mbox{cursus}} performs genome-wide analyses.
+This vignette introduces the R~package \textbf{globalSeq}. The function \hyperref[omnibus]{\mbox{omnibus}} tests for association between an overdispersed count variable and a high-dimensional covariate set. The function \hyperref[proprius]{\mbox{proprius}} decomposes the test statistic to show the contributions of individual samples or covariates. And the function \hyperref[cursus]{\mbox{cursus}} performs genome-wide analyses.
 
 \section{Initialisation}
 \label{initialisation}

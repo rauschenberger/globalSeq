@@ -14,3 +14,4 @@
 
 * Added functions
 * Added help pages
+* Added vignette

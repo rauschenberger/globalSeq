@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Decomposition � proprius • globalSeq</title>
+<title>Decomposition — proprius • globalSeq</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -18,13 +18,26 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Decomposition — proprius" />
+
+<meta property="og:description" content="Even though the function omnibus tests
+a single hypothesis on a whole covariate set,
+this function allows to calculate
+the individual contributions of n samples or
+p covariates to the test statistic." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -33,18 +46,6 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
-
-<!-- Google analytics -->
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-96845398-2', 'auto');
-  ga('send', 'pageview');
-
-</script>
 
   </head>
 
@@ -59,8 +60,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">globalSeq</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">globalSeq</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.9.1</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -91,6 +96,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -98,12 +104,15 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Decomposition</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rauschenberger/globalSeq/blob/master/R/user_functions.R'><code>R/user_functions.R</code></a></small>
+    <div class="hidden name"><code>proprius.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Even though the function <code><a href='omnibus.html'>omnibus</a></code> tests
 a single hypothesis on a whole covariate set,
@@ -111,12 +120,13 @@ this function allows to calculate
 the individual contributions of <code>n</code> samples or
 <code>p</code> covariates to the test statistic.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>proprius</span>(<span class='no'>y</span>, <span class='no'>X</span>, <span class='no'>type</span>, <span class='kw'>offset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
         <span class='kw'>mu</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>phi</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
         <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>perm</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -206,14 +216,14 @@ testing association with a clinical outcome",
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>The function <code><a href='omnibus.html'>omnibus</a></code> tests for associations
+    <div class='dont-index'><p>The function <code><a href='omnibus.html'>omnibus</a></code> tests for associations
 between an overdispersed response variable and a high-dimensional
 covariate set.
 The function <code><a href='cursus.html'>cursus</a></code> tests for association
 between RNA-Seq and local genetic or epigenetic alternations
 across the whole genome.
 All other functions of the R package <code><a href='globalSeq-package.html'>globalSeq</a></code>
-are <code><a href='internal.html'>internal</a></code>.</p>
+are <code><a href='internal.html'>internal</a></code>.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -223,12 +233,12 @@ are <code><a href='internal.html'>internal</a></code>.</p>
 <span class='no'>X</span> <span class='kw'>&lt;-</span> <span class='fu'>matrix</span>(<span class='fu'>rnorm</span>(<span class='no'>n</span>*<span class='no'>p</span>),<span class='kw'>nrow</span><span class='kw'>=</span><span class='no'>n</span>,<span class='kw'>ncol</span><span class='kw'>=</span><span class='no'>p</span>)
 
 <span class='co'># decomposition</span>
-<span class='fu'>proprius</span>(<span class='no'>y</span>,<span class='no'>X</span>,<span class='kw'>type</span><span class='kw'>=</span><span class='st'>"samples"</span>)</div><div class='img'><img src='proprius-3.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt;  [1] -1.473829651 -1.621989536  0.389933792 -1.083847301  1.892962633
+<span class='fu'>proprius</span>(<span class='no'>y</span>,<span class='no'>X</span>,<span class='kw'>type</span><span class='kw'>=</span><span class='st'>"samples"</span>)</div><div class='img'><img src='proprius-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;  [1] -1.473829651 -1.621989536  0.389933792 -1.083847301  1.892962633
 #&gt;  [6] -0.960717613  1.721503713 -0.122347060  2.878808190 -1.212848450
 #&gt; [11]  0.265357110 -1.419499667 -0.945988913 -1.218230787 -1.565611811
 #&gt; [16]  1.924302618 -0.749555757 -1.266216291 -0.778061491 -0.009607322
 #&gt; [21] -1.164619359 -1.077795751 -1.272294761 -1.232923857 -1.496262593
-#&gt; [26] -0.515822170  2.721173151 -1.648988791  0.638509691 -1.424787341</div><div class='input'><span class='fu'>proprius</span>(<span class='no'>y</span>,<span class='no'>X</span>,<span class='kw'>type</span><span class='kw'>=</span><span class='st'>"covariates"</span>)</div><div class='img'><img src='proprius-4.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt;   [1] -0.061952584  0.592890632 -0.092819492  0.084168673 -0.397585279
+#&gt; [26] -0.515822170  2.721173151 -1.648988791  0.638509691 -1.424787341</div><div class='input'><span class='fu'>proprius</span>(<span class='no'>y</span>,<span class='no'>X</span>,<span class='kw'>type</span><span class='kw'>=</span><span class='st'>"covariates"</span>)</div><div class='img'><img src='proprius-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;   [1] -0.061952584  0.592890632 -0.092819492  0.084168673 -0.397585279
 #&gt;   [6] -0.183539882  0.031889996 -0.426508046 -0.259698391 -0.265361798
 #&gt;  [11] -0.317232615  0.072810328 -0.239941836 -0.245169345 -0.365328320
 #&gt;  [16] -0.167861221  0.019013502 -0.293306936 -0.074805315 -0.269415642
@@ -275,11 +285,14 @@ are <code><a href='internal.html'>internal</a></code>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

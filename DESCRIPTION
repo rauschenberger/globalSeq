@@ -12,7 +12,8 @@ Depends: R (>= 3.0.0)
 Suggests:
     knitr,
     testthat,
-    SummarizedExperiment
+    SummarizedExperiment,
+    S4Vectors
 Authors@R: person("Armin","Rauschenberger",email="a.rauschenberger@vumc.nl",role=c("aut","cre"))
 VignetteBuilder: knitr
 License: GPL-3

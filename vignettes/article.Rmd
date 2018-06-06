@@ -12,6 +12,6 @@ vignette: >
 Click [here](https://www.biomedcentral.com/content/pdf/s12859-016-0961-5.pdf) to download article.
 
 <div>
-<object data="https://www.biomedcentral.com/content/pdf/s12859-016-0961-5.pdf" type="application/pdf" width="130%" height="600px">
+<object data="https://www.biomedcentral.com/content/pdf/s12859-016-0961-5.pdf" type="application/pdf" width="100%" height="500px">
 </object>
 </div>

@@ -4,14 +4,14 @@
 ---
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{pkgdown}
+  %\VignetteIndexEntry{vignette}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-<!--html_preserve-->
-<object data="https://bioconductor.org/packages/devel/bioc/vignettes/globalSeq/inst/doc/globalSeq.pdf" type="application/pdf" width="900px" height="700px"> 
-  <p>Please unblock content, or download vignette <a href="https://bioconductor.org/packages/devel/bioc/vignettes/globalSeq/inst/doc/globalSeq.pdf">here</a>.</p>  
- </object>
- </div>
-<!--/html_preserve-->
+Click [here](https://bioconductor.org/packages/devel/bioc/vignettes/globalSeq/inst/doc/globalSeq.pdf) to download vignette.
+
+<div>
+<object data="https://bioconductor.org/packages/devel/bioc/vignettes/globalSeq/inst/doc/globalSeq.pdf" type="application/pdf" width="130%" height="600px">
+</object>
+</div>

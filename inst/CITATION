@@ -13,5 +13,6 @@ citEntry(entry="Article",
     textVersion =
 		paste("Armin Rauschenberger, Marianne A. Jonker, Mark A. van de Wiel, and Renee X. Menezes (2016).",
 		"\"Testing for association between RNA-Seq and high-dimensional data\",",
-        	"BMC Bioinformatics, 17:118.")
+        	"BMC Bioinformatics, 17:118.",
+		"http://dx.doi.org/10.1186/s12859-016-0961-5")
 )

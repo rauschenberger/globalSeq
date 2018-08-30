@@ -844,7 +844,8 @@ intern.matrix <- function(Y){
         if(class(Y) %in% c("RangedSummarizedExperiment","SummarizedExperiment","SummarizedExperiment0")){
             if(!is.element("SummarizedExperiment",utils::installed.packages()[,1])){
                 stop("Please transform Y to a matrix, or type:
-                     source(\"http://bioconductor.org/biocLite.R\")
+                     if (!requireNamespace("BiocManager", quietly=TRUE))
+                         install.packages("BiocManager")
                      BiocInstaller::biocLite(\"SummarizedExperiment\")")
             } else {
                Y <- SummarizedExperiment::assays(Y)$counts 

@@ -21,7 +21,8 @@ This vignette introduces the R~package \textbf{globalSeq}. The function \hyperre
 
 Start with installing the R package \textbf{globalSeq} from Bioconductor:
 <<eval=FALSE>>=
-source("https://bioconductor.org/biocLite.R")
+if (!requireNamespace("BiocManager", quietly=TRUE))
+    install.packages("BiocManager")
 BiocInstaller::biocLite("globalSeq")
 @
 

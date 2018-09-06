@@ -31,7 +31,7 @@ The package globalSeq depends on [R
 ``` r
 if (!requireNamespace("BiocManager", quietly=TRUE))
     install.packages("BiocManager")
-BiocInstaller::biocLite("globalSeq")
+BiocManager::install("globalSeq")
 ```
 
 Alternatively, it can be installed from

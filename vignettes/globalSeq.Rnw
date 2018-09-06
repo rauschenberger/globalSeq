@@ -23,7 +23,7 @@ Start with installing the R package \textbf{globalSeq} from Bioconductor:
 <<eval=FALSE>>=
 if (!requireNamespace("BiocManager", quietly=TRUE))
     install.packages("BiocManager")
-BiocInstaller::biocLite("globalSeq")
+BiocManager::install("globalSeq")
 @
 
 Please type the following command to load and attach the package:

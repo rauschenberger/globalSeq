@@ -846,7 +846,7 @@ intern.matrix <- function(Y){
                 stop("Please transform Y to a matrix, or type:
                      if (!requireNamespace("BiocManager", quietly=TRUE))
                          install.packages("BiocManager")
-                     BiocInstaller::biocLite(\"SummarizedExperiment\")")
+                     BiocManager::install(\"SummarizedExperiment\")")
             } else {
                Y <- SummarizedExperiment::assays(Y)$counts 
             }

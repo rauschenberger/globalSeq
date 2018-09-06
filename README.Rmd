@@ -29,7 +29,7 @@ The package globalSeq depends on [R >= 3.0.0](https://cran.r-project.org/), and 
 ```{r eval=FALSE}
 if (!requireNamespace("BiocManager", quietly=TRUE))
     install.packages("BiocManager")
-BiocInstaller::biocLite("globalSeq")
+BiocManager::install("globalSeq")
 ```
 
 Alternatively, it can be installed from [GitHub](https://github.com/rauschenberger/globalSeq). This requires the package [devtools](https://CRAN.R-project.org/package=devtools):

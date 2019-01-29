@@ -1,5 +1,5 @@
-%\VignetteEngine{knitr::knitr}
 %\VignetteIndexEntry{globalSeq}
+%\VignetteEngine{knitr::knitr}
 %\VignetteEncoding{UTF-8}
 \documentclass{article}
 \setlength\parindent{0pt}

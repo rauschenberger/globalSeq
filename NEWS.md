@@ -1,3 +1,11 @@
+## globalSeq 1.10.0 (2018-10-31)
+
+* Minor improvements
+
+## globalSeq 1.8.0 (2018-05-01)
+
+* Minor improvements
+
 ## globalSeq 1.6.0 (2017-10-31)
 
 * Minor improvements

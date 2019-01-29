@@ -31,8 +31,9 @@ The package globalSeq depends on [R
 [Bioconductor](http://bioconductor.org/packages/globalSeq/):
 
 ``` r
-source("https://bioconductor.org/biocLite.R")
-BiocInstaller::biocLite("globalSeq")
+if (!requireNamespace("BiocManager", quietly=TRUE))
+    install.packages("BiocManager")
+BiocManager::install("globalSeq")
 ```
 
 Alternatively, it can be installed from

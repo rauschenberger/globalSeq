@@ -1,4 +1,4 @@
-%\VignetteIndexEntry{globalSeq}
+%\VignetteIndexEntry{vignette source}
 %\VignetteEngine{knitr::knitr}
 %\VignetteEncoding{UTF-8}
 \documentclass{article}

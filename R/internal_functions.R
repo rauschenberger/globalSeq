@@ -696,7 +696,7 @@ intern.plot <- function(u, upper = NULL, xlab = "indices") {
 intern.select <- function(i, Y, Ystart, Yend, X, Xloc, window, offset, 
     group, perm, phi, kind) {
     Y <- globalSeq::intern.matrix(Y)
-    if (class(X) == "matrix" | class(X) == "data.frame") {
+    if (is.matrix(X) | is.data.frame(X)) {
         sel <- Ystart[i] - window <= Xloc & Xloc <= Yend[i] + window
         y <- Y[i, ]
         Xsel <- t(X[sel, , drop = FALSE])
@@ -840,7 +840,7 @@ intern.chromo <- function(Y, Ystart, Yend, X, Xloc, window, offset, group,
 #' intern.matrix(Y) 
 #' 
 intern.matrix <- function(Y){
-    if(class(Y)!="matrix"){
+    if(!is.matrix(Y)){
         if(class(Y) %in% c("RangedSummarizedExperiment","SummarizedExperiment","SummarizedExperiment0")){
             if(!is.element("SummarizedExperiment",utils::installed.packages()[,1])){
                 stop("Please transform Y to a matrix, or type:

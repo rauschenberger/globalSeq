@@ -3,6 +3,7 @@
 
 ---
 output: rmarkdown::html_vignette
+pagetitle: vignette
 vignette: >
   %\VignetteIndexEntry{vignette frame}
   %\VignetteEngine{knitr::rmarkdown}

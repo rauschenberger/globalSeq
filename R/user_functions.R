@@ -174,13 +174,13 @@ cursus <- function(Y, Yloc, X, Xloc, window, Ychr = NULL, Xchr = NULL,
         message("Analysing multiple chromosomes:")
         for (i in 1:length(chr)) {
             message(paste("chromosome", chr[i],"\n"))
-            if (class(X) == "list") {
+            if (is.list(X)) {
                 Xpass <- lapply(1:length(X), function(j) X[[j]][Xchr[[j]] == 
                   chr[i], , drop = FALSE])
             } else {
                 Xpass <- X[Xchr == chr[i], , drop = FALSE]
             }
-            if (class(Xloc) == "list") {
+            if (is.list(Xloc)) {
                 Xlocpass <- lapply(1:length(Xloc),
                 function(j) Xloc[[j]][Xchr[[j]] == chr[i]])
             } else {
@@ -353,7 +353,7 @@ omnibus <- function(y, X, offset = NULL, group = NULL, mu = NULL, phi = NULL,
         it <- ncol(perm)
     }
     ########## testing one covariate set ##########
-    if (class(X) == "matrix" | class(X) == "data.frame") {
+    if (is.matrix(X) | is.data.frame(X)) {
         if (kind == 1) {
             globalSeq::intern.crude(y = y, X = X, mu = mu, phi = phi, perm = perm)
         } else if (kind == 0) {

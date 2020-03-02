@@ -14,7 +14,7 @@ Suggests:
     testthat,
     SummarizedExperiment,
     S4Vectors
-Authors@R: person("Armin","Rauschenberger",email="a.rauschenberger@vumc.nl",role=c("aut","cre"))
+Authors@R: person("Armin","Rauschenberger",email="armin.rauschenberger@uni.lu",role=c("aut","cre"))
 VignetteBuilder: knitr
 License: GPL-3
 LazyData: true

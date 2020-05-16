@@ -1,5 +1,5 @@
 Package: globalSeq
-Version: 1.16.0
+Version: 1.16.1
 Title: Global Test for Counts
 Description: The method may be conceptualised as a test of overall significance
     in regression analysis, where the response variable is overdispersed and the
@@ -8,7 +8,7 @@ Description: The method may be conceptualised as a test of overall significance
 biocViews: GeneExpression, ExonArray, DifferentialExpression, GenomeWideAssociation,
     Transcriptomics, DimensionReduction, Regression, Sequencing,
     WholeGenome, RNASeq, ExomeSeq, miRNA, MultipleComparison
-Depends: R (>= 4.0.0)
+Depends: R (>= 3.0.0)
 Suggests:
     knitr,
     testthat,
